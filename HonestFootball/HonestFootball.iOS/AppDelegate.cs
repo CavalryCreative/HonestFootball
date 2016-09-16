@@ -1,5 +1,8 @@
 ﻿using Foundation;
 using UIKit;
+using HonestFootball.Interfaces;
+using HonestFootball.ViewModels;
+using HonestFootball.iOS.Core;
 
 namespace HonestFootball.iOS
 {
@@ -17,9 +20,15 @@ namespace HonestFootball.iOS
 
 		public override bool FinishedLaunching (UIApplication application, NSDictionary launchOptions)
 		{
-			// Override point for customization after application launch.
-			// If not required for your application you can safely delete this method
-			return true;
+            // Override point for customization after application launch.
+            // If not required for your application you can safely delete this method
+
+            //iOS platform specific
+            ServiceContainer.Register<ISettings>(() => new AppleSettings());
+            //ViewModels
+            ServiceContainer.Register<SettingsViewModel>();
+
+            return true;
 		}
 
 		public override void OnResignActivation (UIApplication application)
