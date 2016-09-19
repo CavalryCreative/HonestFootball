@@ -7,7 +7,7 @@ using HonestFootball.Droid.Core;
 
 namespace HonestFootball.Droid
 {
-    [Application]
+    [Application(Theme = "@android:style/Theme.Holo.Light")]
     public class Application : Android.App.Application
     {
         //This constructor is required
@@ -26,6 +26,7 @@ namespace HonestFootball.Droid
             ServiceContainer.Register<ISettings>(() => new DroidSettings(this));
             //ViewModels
             ServiceContainer.Register<SettingsViewModel>();
+            ServiceContainer.Register<CommentsViewModel>();
         }
     }
 }

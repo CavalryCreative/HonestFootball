@@ -1,5 +1,7 @@
 ﻿using HonestFootball.Interfaces;
 using Foundation;
+using HonestFootball.Models;
+using System;
 
 namespace HonestFootball.iOS.Core
 {
@@ -14,6 +16,37 @@ namespace HonestFootball.iOS.Core
                 defaults.SetBool(value, "IsSoundOn");
                 defaults.Synchronize();
             }
+        }
+
+        bool ISettings.IsSoundOn
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        User ISettings.User
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        void ISettings.Save()
+        {
+            throw new NotImplementedException();
         }
     }
 }

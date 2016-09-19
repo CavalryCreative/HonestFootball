@@ -7,7 +7,9 @@ namespace HonestFootball.ViewModels
     {
         public Comment[] Comments { get; set; }
 
-        public async Task GetMessages()
+        public Comment Comment { get; set; }
+
+        public async Task GetComments()
         {
             //if (Conversation == null)
             //    throw new Exception("No conversation.");

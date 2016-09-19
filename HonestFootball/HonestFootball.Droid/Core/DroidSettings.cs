@@ -1,5 +1,7 @@
+using System;
 using Android.Content;
 using HonestFootball.Interfaces;
+using HonestFootball.Models;
 
 namespace HonestFootball.Droid.Core
 {
@@ -23,6 +25,36 @@ namespace HonestFootball.Droid.Core
                     editor.Commit();
                 }
             }
+        }
+        bool ISettings.IsSoundOn
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        User ISettings.User
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        void ISettings.Save()
+        {
+            throw new NotImplementedException();
         }
     }
 }

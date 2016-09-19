@@ -57,27 +57,11 @@ namespace HonestFootball.Droid
 			}
 		}
 		
-		public partial class Id
-		{
-			
-			// aapt resource value: 0x7f050000
-			public const int myButton = 2131034112;
-			
-			static Id()
-			{
-				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
-			}
-			
-			private Id()
-			{
-			}
-		}
-		
 		public partial class Layout
 		{
 			
 			// aapt resource value: 0x7f030000
-			public const int Main = 2130903040;
+			public const int Comments = 2130903040;
 			
 			static Layout()
 			{
@@ -92,11 +76,14 @@ namespace HonestFootball.Droid
 		public partial class String
 		{
 			
-			// aapt resource value: 0x7f040001
-			public const int app_name = 2130968577;
-			
 			// aapt resource value: 0x7f040000
-			public const int hello = 2130968576;
+			public const int ApplicationName = 2130968576;
+			
+			// aapt resource value: 0x7f040001
+			public const int ErrorTitle = 2130968577;
+			
+			// aapt resource value: 0x7f040002
+			public const int Loading = 2130968578;
 			
 			static String()
 			{
