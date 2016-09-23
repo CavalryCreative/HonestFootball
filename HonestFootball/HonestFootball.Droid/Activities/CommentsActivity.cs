@@ -7,6 +7,7 @@ using Android.Widget;
 
 using HonestFootball.ViewModels;
 using HonestFootball.Models;
+using System;
 
 namespace HonestFootball.Droid.Activities
 {
@@ -53,17 +54,20 @@ namespace HonestFootball.Droid.Activities
 
         public override bool OnCreateOptionsMenu(IMenu menu)
         {
-            MenuInflater.Inflate(Resource.Menu.ConversationsMenu, menu);
-            return base.OnCreateOptionsMenu(menu);
+            //MenuInflater.Inflate(Resource.Menu.ConversationsMenu, menu);
+            //return base.OnCreateOptionsMenu(menu);
+            return true;
         }
 
         public override bool OnOptionsItemSelected(IMenuItem item)
         {
-            if (item.ItemId == Resource.Id.addFriendMenu)
-            {
-                StartActivity(typeof(FriendsActivity));
-            }
-            return base.OnOptionsItemSelected(item);
+            //if (item.ItemId == Resource.Id.addFriendMenu)
+            //{
+            //    StartActivity(typeof(FriendsActivity));
+            //}
+            //return base.OnOptionsItemSelected(item);
+
+            return true;
         }
     }
 
