@@ -40,8 +40,7 @@ namespace HonestFootball.Droid
 
             SignalRChatHub.On<string>("BroadcastFeed", comment =>
             {
-                if (OnMessageReceived != null)
-                    OnMessageReceived(this, string.Format("{0}", comment));
+                OnMessageReceived?.Invoke(this, string.Format("{0}", comment));
             });
         }
     }
