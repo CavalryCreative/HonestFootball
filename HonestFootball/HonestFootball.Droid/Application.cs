@@ -35,10 +35,10 @@ namespace HonestFootball.Droid
             ServiceContainer.Register<CommentsViewModel>();
 
             //
-            chatConnection = new HubConnection("http://169.254.80.80:54810/");
+            chatConnection = new HubConnection("http://honest-apps.elasticbeanstalk.com/");
             SignalRChatHub = chatConnection.CreateHubProxy("CommentsHub");
 
-            SignalRChatHub.On<string>("addComment", comment =>
+            SignalRChatHub.On<string>("BroadcastFeed", comment =>
             {
                 if (OnMessageReceived != null)
                     OnMessageReceived(this, string.Format("{0}", comment));
