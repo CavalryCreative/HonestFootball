@@ -12,7 +12,7 @@ namespace HonestFootball.Droid
     [Application(Theme = "@android:style/Theme.Holo.Light")]
     public class Application : Android.App.Application
     {
-        HubConnection chatConnection;
+        HubConnection hubConnection;
         IHubProxy SignalRChatHub;
         public event EventHandler<string> OnMessageReceived;
 
@@ -32,16 +32,27 @@ namespace HonestFootball.Droid
             ServiceContainer.Register<ISettings>(() => new DroidSettings(this));
             //ViewModels
             ServiceContainer.Register<SettingsViewModel>();
-            ServiceContainer.Register<CommentsViewModel>();
-
-            //
-            chatConnection = new HubConnection("http://honest-apps.elasticbeanstalk.com/");
-            SignalRChatHub = chatConnection.CreateHubProxy("CommentsHub");
-
-            SignalRChatHub.On<string>("BroadcastFeed", comment =>
-            {
-                OnMessageReceived?.Invoke(this, string.Format("{0}", comment));
-            });
+            ServiceContainer.Register<CommentsViewModel>();           
         }
+
+        private async void GetInfo_OnGetInfoComplete(object sender, EventArgs e)
+        {
+            hubConnection = new HubConnection("http://honest-apps.elasticbeanstalk.com/");
+            SignalRChatHub = hubConnection.CreateHubProxy("FeedHub");
+
+            SignalRChatHub.On<string>("BroadcastMessage", teamId =>
+            {
+                OnMessageReceived?.Invoke(this, string.Format("{0}", teamId));
+            });
+
+            try
+            {
+                await hubConnection.Start();
+            }
+            catch(Exception ex)
+            {
+                Console.Write(ex.ToString());//TODO - capture error and show dialog
+            }
+        }      
     }
 }
