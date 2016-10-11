@@ -8,12 +8,17 @@ using Android.Widget;
 using HonestFootball.ViewModels;
 using HonestFootball.Models;
 using System;
+using Microsoft.AspNet.SignalR.Client;
 
 namespace HonestFootball.Droid.Activities
 {
     [Activity(Label = "Comments")]
     public class CommentsActivity : BaseActivity<CommentsViewModel>
     {
+        HubConnection hubConnection;
+        IHubProxy SignalRChatHubProxy;
+        public event EventHandler<string> OnMessageReceived;
+
         ListView listView;
         Adapter adapter;
 
@@ -23,10 +28,12 @@ namespace HonestFootball.Droid.Activities
 
             SetContentView(Resource.Layout.Comments);
 
-            listView = FindViewById<ListView>(Resource.Id.conversationsList);
+            //Create hub connection
+            hubConnection = new HubConnection("http://honest-apps.elasticbeanstalk.com/");
+            SignalRChatHubProxy = hubConnection.CreateHubProxy("FeedHub");
 
-            listView.Adapter =
-                adapter = new Adapter(this);
+            listView = FindViewById<ListView>(Resource.Id.conversationsList);
+            listView.Adapter = adapter = new Adapter(this);
 
             listView.ItemClick += (sender, e) =>
             {
@@ -34,6 +41,23 @@ namespace HonestFootball.Droid.Activities
 
                 //StartActivity(typeof(MessagesActivity));
             };
+        }
+
+        private async void Connect()
+        {
+            SignalRChatHubProxy.On<string>("BroadcastMessage", teamId =>
+            {
+                OnMessageReceived?.Invoke(this, string.Format("{0}", teamId));
+            });
+
+            try
+            {
+                await hubConnection.Start();
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex.ToString());//TODO - capture error and show dialog
+            }
         }
 
         protected async override void OnResume()

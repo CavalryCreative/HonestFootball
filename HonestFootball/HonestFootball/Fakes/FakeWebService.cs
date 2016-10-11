@@ -23,9 +23,9 @@ namespace HonestFootball.Fakes
 
             return new[]
             {
-                new Comment { Id=1, Text="Jim Baxter" },
-                new Comment { Id=2, Text="Jeff Baxter" },
-                new Comment { Id=3, Text="Joe Baxter" },
+                new Comment { Id=1, Text="Jim Baxter", Score="Everton 4, Fulchester 0", Time="57" },
+                new Comment { Id=2, Text="Jeff Baxter", Score="Everton 5, Fulchester 0", Time="59" },
+                new Comment { Id=3, Text="Joe Baxter", Score="Everton 5, Fulchester 0", Time="61" },
             };
         }
     }
