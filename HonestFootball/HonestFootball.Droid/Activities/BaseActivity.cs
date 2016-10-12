@@ -24,7 +24,8 @@ namespace HonestFootball.Droid.Activities
             base.OnCreate(bundle);
 
             progress = new ProgressDialog(this);
-            progress.SetCancelable(false); progress.SetTitle(Resource.String.Loading);
+            progress.SetCancelable(false);
+            progress.SetTitle(Resource.String.Loading);
         }
 
         protected override void OnResume()

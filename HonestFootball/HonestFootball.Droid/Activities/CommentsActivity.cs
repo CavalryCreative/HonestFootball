@@ -12,7 +12,7 @@ using Microsoft.AspNet.SignalR.Client;
 
 namespace HonestFootball.Droid.Activities
 {
-    [Activity(Label = "Comments")]
+    [Activity(Label = "@string/ApplicationName", MainLauncher = true)]
     public class CommentsActivity : BaseActivity<CommentsViewModel>
     {
         HubConnection hubConnection;
@@ -32,15 +32,8 @@ namespace HonestFootball.Droid.Activities
             hubConnection = new HubConnection("http://honest-apps.elasticbeanstalk.com/");
             SignalRChatHubProxy = hubConnection.CreateHubProxy("FeedHub");
 
-            listView = FindViewById<ListView>(Resource.Id.conversationsList);
+            listView = FindViewById<ListView>(Resource.Id.commentsList);
             listView.Adapter = adapter = new Adapter(this);
-
-            listView.ItemClick += (sender, e) =>
-            {
-                viewModel.Comment = adapter[e.Position];
-
-                //StartActivity(typeof(MessagesActivity));
-            };
         }
 
         private async void Connect()
@@ -118,10 +111,13 @@ namespace HonestFootball.Droid.Activities
             }
 
             var comment = this[position];
-            var username = convertView.FindViewById<TextView>(Resource.Id.conversationUsername);
-            var lastComment = convertView.FindViewById<TextView>(Resource.Id);
+            var commentText = convertView.FindViewById<TextView>(Resource.Id.commentText);
+            var matchScore = convertView.FindViewById<TextView>(Resource.Id.matchScore);
+            var matchTime = convertView.FindViewById<TextView>(Resource.Id.matchTime);
 
-            lastComment.Text = comment.Text;
+            commentText.Text = comment.Text;
+            matchScore.Text = comment.Score;
+            matchTime.Text = comment.Time;
 
             return convertView;
         }
