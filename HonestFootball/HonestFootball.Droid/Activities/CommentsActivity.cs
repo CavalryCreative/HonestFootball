@@ -34,13 +34,15 @@ namespace HonestFootball.Droid.Activities
 
             listView = FindViewById<ListView>(Resource.Id.commentsList);
             listView.Adapter = adapter = new Adapter(this);
+
+            //OnMessageReceived += (sender, message) => RunOnUiThread(() => adapter.)
         }
 
         private async void Connect()
         {
-            SignalRChatHubProxy.On<string>("BroadcastMessage", teamId =>
+            SignalRChatHubProxy.On<string>("showMessage", (string text) =>
             {
-                OnMessageReceived?.Invoke(this, string.Format("{0}", teamId));
+                OnMessageReceived?.Invoke(this, string.Format("{0}", text));
             });
 
             try
