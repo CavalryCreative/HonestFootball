@@ -10,6 +10,8 @@ using HonestFootball.Models;
 using System;
 using Microsoft.AspNet.SignalR.Client;
 
+using Newtonsoft.Json.Linq;
+
 namespace HonestFootball.Droid.Activities
 {
     [Activity(Label = "@string/ApplicationName", MainLauncher = true)]
@@ -35,14 +37,30 @@ namespace HonestFootball.Droid.Activities
             listView = FindViewById<ListView>(Resource.Id.commentsList);
             listView.Adapter = adapter = new Adapter(this);
 
-            //OnMessageReceived += (sender, message) => RunOnUiThread(() => adapter.)
+            Connect();
+
+            OnMessageReceived += (sender, message) => RunOnUiThread(() =>
+            {
+                string json = message;
+                string jPath = "Events";
+
+                JToken token = JToken.Parse(json);
+
+                var y = token.SelectTokens(jPath);
+
+                foreach (var childToken in y.Children())
+                {
+                   
+                   
+                }
+            });
         }
 
         private async void Connect()
         {
             SignalRChatHubProxy.On<string>("showMessage", (string text) =>
             {
-                OnMessageReceived?.Invoke(this, string.Format("{0}", text));
+                OnMessageReceived?.Invoke(this, text);
             });
 
             try
