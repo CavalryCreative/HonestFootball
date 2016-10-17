@@ -14,7 +14,7 @@ using Newtonsoft.Json.Linq;
 
 namespace HonestFootball.Droid.Activities
 {
-    [Activity(Label = "@string/ApplicationName", MainLauncher = true)]
+    [Activity(Label = "@string/ApplicationName")]
     public class CommentsActivity : BaseActivity<CommentsViewModel>
     {
         ListView listView;
