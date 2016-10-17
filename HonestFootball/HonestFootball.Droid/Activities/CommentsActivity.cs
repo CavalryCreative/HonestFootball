@@ -14,8 +14,8 @@ using Newtonsoft.Json.Linq;
 
 namespace HonestFootball.Droid.Activities
 {
-    [Activity(Label = "@string/ApplicationName")]
-    public class CommentsActivity : BaseActivity<CommentsViewModel>
+    [Activity(Label = "@string/ApplicationName", MainLauncher = true, Icon = "@drawable/icon")]
+    public class CommentsActivity : Activity
     {
         ListView listView;
         Adapter adapter;
@@ -55,16 +55,16 @@ namespace HonestFootball.Droid.Activities
         {
             base.OnResume();
 
-            try
-            {
-                await viewModel.GetComments();
+            //try
+            //{
+            //    await viewModel.GetComments();
 
-                adapter.NotifyDataSetInvalidated();
-            }
-            catch (Exception exc)
-            {
-                DisplayError(exc);
-            }
+            //    adapter.NotifyDataSetInvalidated();
+            //}
+            //catch (Exception exc)
+            //{
+            //    DisplayError(exc);
+            //}
         }
 
         public override bool OnCreateOptionsMenu(IMenu menu)
@@ -148,6 +148,11 @@ namespace HonestFootball.Droid.Activities
 
         public async void Connect()
         {
+            _proxy.On<string>("showMessage", (string text) =>
+            {
+                OnMessageReceived?.Invoke(this, text);
+            });
+
             try
             {
                 await _connection.Start();
@@ -155,12 +160,7 @@ namespace HonestFootball.Droid.Activities
             catch (Exception ex)
             {
                 Console.Write(ex.ToString());//TODO - capture error and show dialog
-            }
-
-            _proxy.On<string>("showMessage", (string text) =>
-            {
-                OnMessageReceived?.Invoke(this, text);
-            });          
+            }         
         }
     }
 }

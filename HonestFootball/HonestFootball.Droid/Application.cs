@@ -24,6 +24,7 @@ namespace HonestFootball.Droid
 
             //Android platform specific
             ServiceContainer.Register<ISettings>(() => new DroidSettings(this));
+            ServiceContainer.Register<IWebService>(() => new WebService());
             //ViewModels
             ServiceContainer.Register<SettingsViewModel>();
             ServiceContainer.Register<CommentsViewModel>();     
