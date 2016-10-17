@@ -17,10 +17,6 @@ namespace HonestFootball.Droid.Activities
     [Activity(Label = "@string/ApplicationName", MainLauncher = true)]
     public class CommentsActivity : BaseActivity<CommentsViewModel>
     {
-        HubConnection hubConnection;
-        IHubProxy SignalRChatHubProxy;
-        public event EventHandler<string> OnMessageReceived;
-
         ListView listView;
         Adapter adapter;
 
@@ -31,15 +27,14 @@ namespace HonestFootball.Droid.Activities
             SetContentView(Resource.Layout.Comments);
 
             //Create hub connection
-            hubConnection = new HubConnection("http://honest-apps.elasticbeanstalk.com/");
-            SignalRChatHubProxy = hubConnection.CreateHubProxy("FeedHub");
+            var client = new Client("Android");
 
             listView = FindViewById<ListView>(Resource.Id.commentsList);
             listView.Adapter = adapter = new Adapter(this);
 
-            Connect();
+            client.Connect();
 
-            OnMessageReceived += (sender, message) => RunOnUiThread(() =>
+            client.OnMessageReceived += (sender, message) => RunOnUiThread(() =>
             {
                 string json = message;
                 string jPath = "Events";
@@ -54,23 +49,6 @@ namespace HonestFootball.Droid.Activities
                    
                 }
             });
-        }
-
-        private async void Connect()
-        {
-            SignalRChatHubProxy.On<string>("showMessage", (string text) =>
-            {
-                OnMessageReceived?.Invoke(this, text);
-            });
-
-            try
-            {
-                await hubConnection.Start();
-            }
-            catch (Exception ex)
-            {
-                Console.Write(ex.ToString());//TODO - capture error and show dialog
-            }
         }
 
         protected async override void OnResume()
@@ -150,6 +128,39 @@ namespace HonestFootball.Droid.Activities
         public override Comment this[int index]
         {
             get { return commentsViewModel.Comments[index]; }
+        }
+    }
+
+    public class Client
+    {
+        private readonly string _platform;
+        private readonly HubConnection _connection;
+        private readonly IHubProxy _proxy;
+
+        public event EventHandler<string> OnMessageReceived;
+
+        public Client(string platform)
+        {
+            _platform = platform;
+            _connection = new HubConnection("http://honest-apps.elasticbeanstalk.com/");
+            _proxy = _connection.CreateHubProxy("FeedHub");
+        }
+
+        public async void Connect()
+        {
+            try
+            {
+                await _connection.Start();
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex.ToString());//TODO - capture error and show dialog
+            }
+
+            _proxy.On<string>("showMessage", (string text) =>
+            {
+                OnMessageReceived?.Invoke(this, text);
+            });          
         }
     }
 }

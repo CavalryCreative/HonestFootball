@@ -26,7 +26,7 @@ namespace HonestFootball.Droid
             ServiceContainer.Register<ISettings>(() => new DroidSettings(this));
             //ViewModels
             ServiceContainer.Register<SettingsViewModel>();
-            ServiceContainer.Register<CommentsViewModel>();           
+            ServiceContainer.Register<CommentsViewModel>();     
         }
     }
 }

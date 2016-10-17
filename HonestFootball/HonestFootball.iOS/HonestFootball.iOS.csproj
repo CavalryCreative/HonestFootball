@@ -152,9 +152,9 @@
     <Compile Include="Core\AppleSettings.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
-    <Compile Include="ViewController.cs" />
-    <Compile Include="ViewController.designer.cs">
-      <DependentUpon>ViewController.cs</DependentUpon>
+    <Compile Include="CommentsViewController.cs" />
+    <Compile Include="CommentsViewController.designer.cs">
+      <DependentUpon>CommentsViewController.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
