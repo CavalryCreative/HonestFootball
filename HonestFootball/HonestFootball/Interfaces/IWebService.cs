@@ -10,5 +10,6 @@ namespace HonestFootball.Interfaces
     public interface IWebService
     {
         Task<Comment[]> GetComments(string commentId);
+        Task<IList<Team>> GetStandings();
     }
 }
