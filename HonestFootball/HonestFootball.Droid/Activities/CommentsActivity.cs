@@ -7,6 +7,7 @@ using Android.Widget;
 
 using HonestFootball.ViewModels;
 using HonestFootball.Models;
+using HonestFootball.Droid.Core;
 using System;
 using Microsoft.AspNet.SignalR.Client;
 
@@ -15,10 +16,10 @@ using Newtonsoft.Json.Linq;
 namespace HonestFootball.Droid.Activities
 {
     [Activity(Label = "@string/ApplicationName", MainLauncher = true, Icon = "@drawable/icon")]
-    public class CommentsActivity : Activity
+    public class CommentsActivity : BaseActivity<CommentsViewModel>
     {
-        ListView listView;
-        Adapter adapter;
+        //ListView listView;
+        //Adapter adapter;
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -29,10 +30,10 @@ namespace HonestFootball.Droid.Activities
             //Create hub connection
             var client = new Client("Android");
 
-            listView = FindViewById<ListView>(Resource.Id.commentsList);
-            listView.Adapter = adapter = new Adapter(this);
+            //listView = FindViewById<ListView>(Resource.Id.commentsList);
+            //listView.Adapter = adapter = new Adapter(this);
 
-            client.Connect();
+            client.Connect(this);
 
             client.OnMessageReceived += (sender, message) => RunOnUiThread(() =>
             {
@@ -43,29 +44,64 @@ namespace HonestFootball.Droid.Activities
 
                 var y = token.SelectTokens(jPath);
 
+                DroidSettings.TeamApiId = "926";//TODO - test remove when settings screen set up
+
                 foreach (var childToken in y.Children())
                 {
-                   
-                   
+                    // Comment comment = new Comment();
+
+                    var evtScore = childToken.SelectToken("Score").ToString();
+                    var evtMinute = childToken.SelectToken("Minute").ToString();                   
+                    var homeTeamId = childToken.SelectToken("HomeTeamAPIId").ToString();                  
+                    var awayTeamId = childToken.SelectToken("AwayTeamAPIId").ToString();
+                    var evtComment = childToken.SelectToken("EventComment").ToString();
+
+                    if (DroidSettings.TeamApiId == homeTeamId || DroidSettings.TeamApiId == awayTeamId)
+                    {
+                        string jokeComment = string.Empty;
+
+                        if (DroidSettings.TeamApiId == homeTeamId)
+                        {
+                            jokeComment = childToken.SelectToken("HomeComment").ToString();
+                        }
+                        else if (DroidSettings.TeamApiId == awayTeamId)
+                        {
+                            jokeComment = childToken.SelectToken("AwayComment").ToString();
+                        }
+
+                        var commentText = FindViewById<TextView>(Resource.Id.commentText);
+                        var jokeCommentText = FindViewById<TextView>(Resource.Id.jokeCommentText);
+                        var matchScore = FindViewById<TextView>(Resource.Id.matchScore);
+                        var matchTime = FindViewById<TextView>(Resource.Id.matchTime);
+
+                        commentText.Text = evtComment;
+                        jokeCommentText.Text = jokeComment;
+                        matchScore.Text = evtScore;
+                        matchTime.Text = evtMinute;
+                    }
+                    else
+                    {
+                        DisplayText(evtComment.ToString());
+                    }
                 }
             });
         }
 
-        protected async override void OnResume()
-        {
-            base.OnResume();
+        //protected async override void OnResume()
+        //{
+        //    base.OnResume();
 
-            //try
-            //{
-            //    await viewModel.GetComments();
+        //    try
+        //    {
+        //        await viewModel.GetComments();
 
-            //    adapter.NotifyDataSetInvalidated();
-            //}
-            //catch (Exception exc)
-            //{
-            //    DisplayError(exc);
-            //}
-        }
+        //        adapter.NotifyDataSetInvalidated();
+        //    }
+        //    catch (Exception exc)
+        //    {
+        //        DisplayError(exc);
+        //    }
+        //}
 
         public override bool OnCreateOptionsMenu(IMenu menu)
         {
@@ -108,14 +144,16 @@ namespace HonestFootball.Droid.Activities
                 convertView = inflater.Inflate(Resource.Layout.Comments, null);
             }
 
-            var comment = this[position];
-            var commentText = convertView.FindViewById<TextView>(Resource.Id.commentText);
-            var matchScore = convertView.FindViewById<TextView>(Resource.Id.matchScore);
-            var matchTime = convertView.FindViewById<TextView>(Resource.Id.matchTime);
+            //var comment = this[position];
+            //var commentText = convertView.FindViewById<TextView>(Resource.Id.commentText);
+            //var jokeCommentText = convertView.FindViewById<TextView>(Resource.Id.jokeCommentText);
+            //var matchScore = convertView.FindViewById<TextView>(Resource.Id.matchScore);
+            //var matchTime = convertView.FindViewById<TextView>(Resource.Id.matchTime);
 
-            commentText.Text = comment.Text;
-            matchScore.Text = comment.Score;
-            matchTime.Text = comment.Time;
+            //commentText.Text = comment.EventComment;
+            //jokeCommentText.Text = comment.HomeComment;
+            //matchScore.Text = comment.Score;
+            //matchTime.Text = comment.Minute;
 
             return convertView;
         }
@@ -146,7 +184,7 @@ namespace HonestFootball.Droid.Activities
             _proxy = _connection.CreateHubProxy("FeedHub");
         }
 
-        public async void Connect()
+        public async void Connect(Context context)
         {
             _proxy.On<string>("showMessage", (string text) =>
             {
@@ -159,7 +197,13 @@ namespace HonestFootball.Droid.Activities
             }
             catch (Exception ex)
             {
-                Console.Write(ex.ToString());//TODO - capture error and show dialog
+                string error = ex.Message;
+
+                new AlertDialog.Builder(context)
+                .SetTitle(Resource.String.ErrorTitle)
+                .SetMessage(error)
+                .SetPositiveButton(Android.Resource.String.Ok, (IDialogInterfaceOnClickListener)null)
+                .Show();
             }         
         }
     }

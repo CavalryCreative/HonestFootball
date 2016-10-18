@@ -2,7 +2,7 @@
 
 namespace HonestFootball.Interfaces
 {
-    public interface ISettings
+    public interface IAppSettings
     {
         bool IsSoundOn { get; set; }
         User User { get; set; }

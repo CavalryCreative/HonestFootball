@@ -8,7 +8,7 @@ namespace HonestFootball.ViewModels
 
         public void Save()
         {
-            settings.IsSoundOn = IsSoundOn;
+            //settings.IsSoundOn = IsSoundOn;
         }
     }
 }

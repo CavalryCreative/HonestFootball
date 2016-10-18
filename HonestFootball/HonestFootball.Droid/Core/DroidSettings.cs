@@ -1,60 +1,22 @@
-using System;
-using Android.Content;
-using HonestFootball.Interfaces;
-using HonestFootball.Models;
+using Plugin.Settings;
+using Plugin.Settings.Abstractions;
 
 namespace HonestFootball.Droid.Core
 {
-    public class DroidSettings : ISettings
+    public class DroidSettings
     {
-        private readonly ISharedPreferences preferences;
-
-        public DroidSettings(Context context)
+        private static ISettings AppSettings
         {
-            preferences = context.GetSharedPreferences(context.PackageName, FileCreationMode.Private);
+            get { return CrossSettings.Current; }
         }
 
-        public bool IsSoundOn
-        {
-            get { return preferences.GetBoolean("IsSoundOn", true); }
-            set
-            {
-                using (var editor = preferences.Edit())
-                {
-                    editor.PutBoolean("IsSoundOn", value);
-                    editor.Commit();
-                }
-            }
-        }
-        bool ISettings.IsSoundOn
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
+        private const string TeamIdKey = "TeamAPIId";
+        private static readonly string TeamIdDefault = string.Empty;
 
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        User ISettings.User
+        public static string TeamApiId
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
-
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        void ISettings.Save()
-        {
-            throw new NotImplementedException();
+            get { return AppSettings.GetValueOrDefault(TeamIdKey, TeamIdDefault); }
+            set { AppSettings.AddOrUpdateValue(TeamIdKey, value); }
         }
     }
 }

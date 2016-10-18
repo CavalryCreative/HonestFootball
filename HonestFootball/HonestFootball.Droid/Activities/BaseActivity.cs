@@ -58,5 +58,14 @@ namespace HonestFootball.Droid.Activities
             .SetPositiveButton(Android.Resource.String.Ok, (IDialogInterfaceOnClickListener)null)
             .Show();
         }
+
+        protected void DisplayText(string txt)
+        {
+            new AlertDialog.Builder(this)
+            .SetTitle(Resource.String.ErrorTitle)
+            .SetMessage(txt)
+            .SetPositiveButton(Android.Resource.String.Ok, (IDialogInterfaceOnClickListener)null)
+            .Show();
+        }
     }
 }

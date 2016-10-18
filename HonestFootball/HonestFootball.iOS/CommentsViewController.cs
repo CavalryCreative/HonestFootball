@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR.Client;
+using Newtonsoft.Json.Linq;
+using HonestFootball.iOS.Core;
 
 using UIKit;
 
@@ -13,14 +15,68 @@ namespace HonestFootball.iOS
 
         public CommentsViewController(IntPtr handle) : base (handle)
 		{
-		}
+            _client = new Client("iOS");
+        }
 
-		public override void ViewDidLoad ()
+		public override async void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
-			// Perform any additional setup after loading the view, typically from a nib.
+            // Perform any additional setup after loading the view, typically from a nib.
 
-		}
+            await _client.Connect();
+
+            _client.OnMessageReceived += (sender, message) => InvokeOnMainThread(() =>
+                {
+                    string json = message;
+                    string jPath = "Events";
+
+                    JToken token = JToken.Parse(json);
+
+                    var y = token.SelectTokens(jPath);
+
+                    AppleSettings.TeamApiId = "926";//TODO - test remove when settings screen set up
+
+                    foreach (var childToken in y.Children())
+                    {
+                        // Comment comment = new Comment();
+
+                        var evtScore = childToken.SelectToken("Score").ToString();
+                        var evtMinute = childToken.SelectToken("Minute").ToString();
+                        var homeTeamId = childToken.SelectToken("HomeTeamAPIId").ToString();
+                        var awayTeamId = childToken.SelectToken("AwayTeamAPIId").ToString();
+                        var evtComment = childToken.SelectToken("EventComment").ToString();
+
+                        if (AppleSettings.TeamApiId == homeTeamId || AppleSettings.TeamApiId == awayTeamId)
+                        {
+                            string jokeComment = string.Empty;
+
+                            if (AppleSettings.TeamApiId == homeTeamId)
+                            {
+                                jokeComment = childToken.SelectToken("HomeComment").ToString();
+                            }
+                            else if (AppleSettings.TeamApiId == awayTeamId)
+                            {
+                                jokeComment = childToken.SelectToken("AwayComment").ToString();
+                            }
+
+                            //var commentText = FindViewById<TextView>(Resource.Id.commentText);
+                            //var jokeCommentText = FindViewById<TextView>(Resource.Id.jokeCommentText);
+                            //var matchScore = FindViewById<TextView>(Resource.Id.matchScore);
+                            //var matchTime = FindViewById<TextView>(Resource.Id.matchTime);
+
+                            //commentText.Text = evtComment;
+                            //jokeCommentText.Text = jokeComment;
+                            //matchScore.Text = evtScore;
+                            //matchTime.Text = evtMinute;
+                        }
+                        else
+                        {
+                            //DisplayText(evtComment.ToString());
+                        }
+                    }
+                }
+            );
+        }
 
 		public override void DidReceiveMemoryWarning ()
 		{

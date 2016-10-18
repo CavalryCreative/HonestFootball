@@ -61,13 +61,10 @@ namespace HonestFootball.Droid
 		{
 			
 			// aapt resource value: 0x7f050000
-			public const int MyButton = 2131034112;
+			public const int commentText = 2131034112;
 			
 			// aapt resource value: 0x7f050001
-			public const int commentText = 2131034113;
-			
-			// aapt resource value: 0x7f050004
-			public const int commentsList = 2131034116;
+			public const int jokeCommentText = 2131034113;
 			
 			// aapt resource value: 0x7f050002
 			public const int matchScore = 2131034114;
@@ -89,13 +86,10 @@ namespace HonestFootball.Droid
 		{
 			
 			// aapt resource value: 0x7f030000
-			public const int Commentary = 2130903040;
+			public const int CommentListItem = 2130903040;
 			
 			// aapt resource value: 0x7f030001
-			public const int CommentListItem = 2130903041;
-			
-			// aapt resource value: 0x7f030002
-			public const int Comments = 2130903042;
+			public const int Comments = 2130903041;
 			
 			static Layout()
 			{

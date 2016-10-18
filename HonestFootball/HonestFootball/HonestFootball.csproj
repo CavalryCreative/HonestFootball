@@ -34,7 +34,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Fakes\FakeWebService.cs" />
-    <Compile Include="Interfaces\ISettings.cs" />
+    <Compile Include="Interfaces\IAppSettings.cs" />
     <Compile Include="Interfaces\IWebService.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\User.cs" />

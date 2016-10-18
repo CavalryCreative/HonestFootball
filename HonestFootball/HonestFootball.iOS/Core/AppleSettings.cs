@@ -1,52 +1,22 @@
-﻿using HonestFootball.Interfaces;
-using Foundation;
-using HonestFootball.Models;
-using System;
+﻿using Plugin.Settings;
+using Plugin.Settings.Abstractions;
 
 namespace HonestFootball.iOS.Core
 {
-    public class AppleSettings : ISettings
+    public static class AppleSettings
     {
-        public bool IsSoundOn
+        private static ISettings AppSettings
         {
-            get { return NSUserDefaults.StandardUserDefaults.BoolForKey("IsSoundOn"); }
-            set
-            {
-                var defaults = NSUserDefaults.StandardUserDefaults;
-                defaults.SetBool(value, "IsSoundOn");
-                defaults.Synchronize();
-            }
+            get { return CrossSettings.Current; }
         }
 
-        bool ISettings.IsSoundOn
+        private const string TeamIdKey = "TeamAPIId";
+        private static readonly string TeamIdDefault = string.Empty;
+
+        public static string TeamApiId
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
-
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        User ISettings.User
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        void ISettings.Save()
-        {
-            throw new NotImplementedException();
+            get { return AppSettings.GetValueOrDefault(TeamIdKey, TeamIdDefault); }
+            set { AppSettings.AddOrUpdateValue(TeamIdKey, value); }
         }
     }
 }
