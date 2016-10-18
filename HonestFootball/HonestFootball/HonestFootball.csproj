@@ -37,12 +37,14 @@
     <Compile Include="Interfaces\IAppSettings.cs" />
     <Compile Include="Interfaces\IWebService.cs" />
     <Compile Include="Models\Comment.cs" />
+    <Compile Include="Models\Team.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceContainer.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\CommentsViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
+    <Compile Include="ViewModels\StandingsViewModelcs.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="project.json" />
