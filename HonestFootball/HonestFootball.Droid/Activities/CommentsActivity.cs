@@ -122,53 +122,6 @@ namespace HonestFootball.Droid.Activities
         }
     }
 
-    class Adapter : BaseAdapter<Comment>
-    {
-        readonly CommentsViewModel commentsViewModel = ServiceContainer.Resolve<CommentsViewModel>();
-        readonly LayoutInflater inflater;
-
-        public Adapter(Context context)
-        {
-            inflater = (LayoutInflater)context.GetSystemService(Context.LayoutInflaterService);
-        }
-
-        public override long GetItemId(int position)
-        {
-            return commentsViewModel.Comments[position].Id;
-        }
-
-        public override View GetView(int position, View convertView, ViewGroup parent)
-        {
-            if (convertView == null)
-            {
-                convertView = inflater.Inflate(Resource.Layout.Comments, null);
-            }
-
-            //var comment = this[position];
-            //var commentText = convertView.FindViewById<TextView>(Resource.Id.commentText);
-            //var jokeCommentText = convertView.FindViewById<TextView>(Resource.Id.jokeCommentText);
-            //var matchScore = convertView.FindViewById<TextView>(Resource.Id.matchScore);
-            //var matchTime = convertView.FindViewById<TextView>(Resource.Id.matchTime);
-
-            //commentText.Text = comment.EventComment;
-            //jokeCommentText.Text = comment.HomeComment;
-            //matchScore.Text = comment.Score;
-            //matchTime.Text = comment.Minute;
-
-            return convertView;
-        }
-
-        public override int Count
-        {
-            get { return commentsViewModel.Comments == null ? 0 : commentsViewModel.Comments.Length; }
-        }
-
-        public override Comment this[int index]
-        {
-            get { return commentsViewModel.Comments[index]; }
-        }
-    }
-
     public class Client
     {
         private readonly string _platform;
