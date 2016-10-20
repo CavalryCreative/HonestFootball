@@ -4,11 +4,11 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="#C2C2C2">
-  <TextView
-      android:id="@+id/txtFragment1"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_centerInParent="true"
-      android:textColor="#000"
-      android:text="Fragment 1" />
+    <TextView
+        android:id="@+id/txtFragment1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:textColor="#000"
+        android:text="Fragment 1" />
 </RelativeLayout>

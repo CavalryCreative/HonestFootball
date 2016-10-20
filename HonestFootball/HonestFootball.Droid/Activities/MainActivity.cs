@@ -11,6 +11,7 @@ using Android.Support.V7.App;
 using Android.Support.V4.Widget;
 using System.Collections.Generic;
 using SupportFragment = Android.Support.V4.App.Fragment;
+using HonestFootball.Droid.Fragments;
 
 namespace HonestFootball.Droid.Activities
 {
@@ -33,11 +34,84 @@ namespace HonestFootball.Droid.Activities
         private Fragment3 mFragment3;
         private Stack<SupportFragment> mStackFragments;
 
-        protected override void OnCreate(Bundle savedInstanceState)
+        protected override void OnCreate(Bundle bundle)
         {
-            base.OnCreate(savedInstanceState);
+            base.OnCreate(bundle);
 
-            // Create your application here
+            // Set our view from the "main" layout resource
+            SetContentView(Resource.Layout.Main);
+
+            mToolbar = FindViewById<SupportToolbar>(Resource.Id.toolbar);
+            mDrawerLayout = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
+            mLeftDrawer = FindViewById<ListView>(Resource.Id.left_drawer);
+            mRightDrawer = FindViewById<ListView>(Resource.Id.right_drawer);
+            mFragmentContainer = FindViewById<FrameLayout>(Resource.Id.fragmentContainer);
+
+            mFragment1 = new Fragment1();
+            mFragment2 = new Fragment2();
+            mFragment3 = new Fragment3();
+
+            mStackFragments = new Stack<SupportFragment>();
+
+            var trans = SupportFragmentManager.BeginTransaction();
+            trans.Add(Resource.Id.fragmentContainer, mFragment3, "Fragment3");
+            trans.Hide(mFragment3);
+
+            trans.Add(Resource.Id.fragmentContainer, mFragment2, "Fragment2");
+            trans.Hide(mFragment2);
+
+            trans.Add(Resource.Id.fragmentContainer, mFragment1, "Fragment1");
+            trans.Commit();
+
+            mCurrentFragment = mFragment1;
+
+            mLeftDrawer.Tag = 0;
+            mRightDrawer.Tag = 1;
+
+            SetSupportActionBar(mToolbar);
+
+            mLeftDataSet = new List<string>();
+            mLeftDataSet.Add("Left Item 1");
+            mLeftDataSet.Add("Left Item 2");
+            mLeftAdapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleListItem1, mLeftDataSet);
+            mLeftDrawer.Adapter = mLeftAdapter;
+
+            mRightDataSet = new List<string>();
+            mRightDataSet.Add("Right Item 1");
+            mRightDataSet.Add("Right Item 2");
+            mRightAdapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleListItem1, mRightDataSet);
+            mRightDrawer.Adapter = mRightAdapter;
+
+            mDrawerToggle = new MyActionBarDrawerToggle(
+                this,                           //Host Activity
+                mDrawerLayout,                  //DrawerLayout
+                Resource.String.openDrawer,     //Opened Message
+                Resource.String.closeDrawer     //Closed Message
+            );
+
+            mDrawerLayout.AddDrawerListener(mDrawerToggle);
+            SupportActionBar.SetHomeButtonEnabled(true);
+            SupportActionBar.SetDisplayShowTitleEnabled(true);
+            mDrawerToggle.SyncState();
+
+            if (bundle != null)
+            {
+                if (bundle.GetString("DrawerState") == "Opened")
+                {
+                    SupportActionBar.SetTitle(Resource.String.openDrawer);
+                }
+
+                else
+                {
+                    SupportActionBar.SetTitle(Resource.String.closeDrawer);
+                }
+            }
+
+            else
+            {
+                //This is the first the time the activity is ran
+                SupportActionBar.SetTitle(Resource.String.closeDrawer);
+            }
         }
 
         public override bool OnOptionsItemSelected(IMenuItem item)

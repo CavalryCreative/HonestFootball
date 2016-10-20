@@ -15,7 +15,7 @@ using Newtonsoft.Json.Linq;
 
 namespace HonestFootball.Droid.Activities
 {
-    [Activity(Label = "@string/ApplicationName", MainLauncher = true, Icon = "@drawable/icon")]
+    [Activity(Label = "@string/ApplicationName", Icon = "@drawable/icon")]
     public class CommentsActivity : BaseActivity<CommentsViewModel>
     {
         //ListView listView;
@@ -44,7 +44,7 @@ namespace HonestFootball.Droid.Activities
 
                 var y = token.SelectTokens(jPath);
 
-                DroidSettings.TeamApiId = "926";//TODO - test remove when settings screen set up
+                DroidSettings.TeamApiId = "9260";//TODO - test remove when settings screen set up
 
                 foreach (var childToken in y.Children())
                 {

@@ -3,15 +3,15 @@ using SupportActionBarDrawerToggle = Android.Support.V7.App.ActionBarDrawerToggl
 using Android.Support.V7.App;
 using Android.Support.V4.Widget;
 
-namespace DrawerLayout_V7_Tutorial
+namespace HonestFootball.Droid
 {
 	public class MyActionBarDrawerToggle : SupportActionBarDrawerToggle
 	{
-		private ActionBarActivity mHostActivity;
+		private AppCompatActivity mHostActivity;
 		private int mOpenedResource;
 		private int mClosedResource;
 
-		public MyActionBarDrawerToggle (ActionBarActivity host, DrawerLayout drawerLayout, int openedResource, int closedResource) 
+		public MyActionBarDrawerToggle (AppCompatActivity host, DrawerLayout drawerLayout, int openedResource, int closedResource) 
 			: base(host, drawerLayout, openedResource, closedResource)
 		{
 			mHostActivity = host;
