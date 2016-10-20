@@ -2529,7 +2529,11 @@ namespace HonestFootball.Droid
 			// aapt resource value: 0x7f080079
 			public const int Base_Widget_AppCompat_Toolbar_Button_Navigation = 2131230841;
 			
+			// aapt resource value: 0x7f08013e
+			public const int MainTheme_Base = 2131231038;
 			
+			// aapt resource value: 0x7f08013f
+			public const int MyDrawerArrowStyle = 2131231039;
 			
 			// aapt resource value: 0x7f080017
 			public const int Platform_AppCompat = 2131230743;
