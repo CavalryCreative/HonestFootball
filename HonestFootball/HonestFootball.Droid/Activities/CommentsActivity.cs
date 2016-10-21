@@ -27,7 +27,6 @@ namespace HonestFootball.Droid.Activities
 
             SetContentView(Resource.Layout.Comments);
 
-            //Create hub connection
             var client = new Client("Android");
 
             //listView = FindViewById<ListView>(Resource.Id.commentsList);
