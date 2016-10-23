@@ -7,7 +7,7 @@ using HonestFootball.Droid.Core;
 
 namespace HonestFootball.Droid
 {
-    [Application(Theme = "@android:style/Theme.Holo.Light")]
+    [Application]
     public class Application : Android.App.Application
     {
         //This constructor is required
