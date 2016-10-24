@@ -7,6 +7,7 @@ using Android.Widget;
 using Android.Support.V4.Widget;
 using Android.Support.V7.App;
 using SupportToolbar = Android.Support.V7.Widget.Toolbar;
+using SupportFragment = Android.Support.V4.App.Fragment;
 using AlertDialog = Android.Support.V7.App.AlertDialog;
 using Android.Support.Design.Widget;
 using Microsoft.AspNet.SignalR.Client;
@@ -15,6 +16,8 @@ using HonestFootball.ViewModels;
 using HonestFootball.Models;
 using HonestFootball.Android.Core;
 using HonestFootball.Interfaces;
+using HonestFootball.Android.Fragments;
+using System.Collections.Generic;
 
 namespace HonestFootball.Android
 {
@@ -22,6 +25,11 @@ namespace HonestFootball.Android
     public class MainActivity : AppCompatActivity
     {
         DrawerLayout drawerLayout;
+        private FrameLayout mFragmentContainer;
+        private SupportFragment mCurrentFragment;
+        private SettingsFragment settingsFragment;
+        private ShareFragment shareFragment;
+        private Stack<SupportFragment> mStackFragments;
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -39,6 +47,21 @@ namespace HonestFootball.Android
             // Create UI
             SetContentView(Resource.Layout.Main);
             drawerLayout = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
+
+            //Create fragments
+            mFragmentContainer = FindViewById<FrameLayout>(Resource.Id.fragmentContainer);
+
+            settingsFragment = new SettingsFragment();
+            shareFragment = new ShareFragment();
+          
+            mStackFragments = new Stack<SupportFragment>();
+
+            var trans = SupportFragmentManager.BeginTransaction();
+            trans.Add(Resource.Id.fragmentContainer, settingsFragment, "SettingsFragment");
+            trans.Hide(settingsFragment);
+
+            trans.Add(Resource.Id.fragmentContainer, shareFragment, "ShareFragment");
+            trans.Hide(shareFragment);
 
             // Init toolbar
             var toolbar = FindViewById<SupportToolbar>(Resource.Id.toolbar);
@@ -89,29 +112,73 @@ namespace HonestFootball.Android
 
         public override bool OnOptionsItemSelected(IMenuItem item)
         {
-            //if (item.ItemId == Resource.Id.addFriendMenu)
-            //{
-            //    StartActivity(typeof(FriendsActivity));
-            //}
-            //return base.OnOptionsItemSelected(item);
+            switch (item.ItemId)
+            {
+                case Resource.Id.action_share:
+                    ShowFragment(shareFragment);
+                    return true;
 
-            return true;
+                case Resource.Id.action_standings:
+                    ShowFragment(settingsFragment);
+                    return true;
+
+                default:
+                    return base.OnOptionsItemSelected(item);
+            }
+        }
+
+        private void ShowFragment(SupportFragment fragment)
+        {
+            if (fragment.IsVisible)
+            {
+                return;
+            }
+
+            var trans = SupportFragmentManager.BeginTransaction();
+
+            trans.SetCustomAnimations(Resource.Animation.slide_in, Resource.Animation.slide_out, Resource.Animation.slide_in, Resource.Animation.slide_out);
+
+            fragment.View.BringToFront();
+            mCurrentFragment.View.BringToFront();
+
+            trans.Hide(mCurrentFragment);
+            trans.Show(fragment);
+
+            trans.AddToBackStack(null);
+            mStackFragments.Push(mCurrentFragment);
+            trans.Commit();
+
+            mCurrentFragment = fragment;
+        }
+
+        public override void OnBackPressed()
+        {
+            if (SupportFragmentManager.BackStackEntryCount > 0)
+            {
+                SupportFragmentManager.PopBackStack();
+                mCurrentFragment = mStackFragments.Pop();
+            }
+
+            else
+            {
+                base.OnBackPressed();
+            }
         }
 
         void NavigationView_NavigationItemSelected(object sender, NavigationView.NavigationItemSelectedEventArgs e)
         {
             switch (e.MenuItem.ItemId)
             {
-                case (Resource.Id.nav_home):
-                    // React on 'Home' selection
+                case (Resource.Id.action_settings):
+                    // React on 'Settings' selection
                     break;
-                case (Resource.Id.nav_messages):
-                    // React on 'Messages' selection
+                case (Resource.Id.action_share):
+                    // React on 'Share' selection
                     break;
-                case (Resource.Id.nav_friends):
-                    // React on 'Friends' selection
+                case (Resource.Id.action_standings):
+                    // React on 'Standings' selection
                     break;
-                case (Resource.Id.nav_discussion):
+                case (Resource.Id.action_news):
                     // React on 'Discussion' selection
                     break;
             }
