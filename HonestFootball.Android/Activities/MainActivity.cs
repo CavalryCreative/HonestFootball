@@ -79,6 +79,9 @@ namespace HonestFootball.Android
             drawerLayout.AddDrawerListener(drawerToggle);
             drawerToggle.SyncState();
 
+            //Populate standings
+            GetStandings();
+
             try
             {
                 GetClient();
@@ -89,6 +92,7 @@ namespace HonestFootball.Android
             }
         }
 
+        #region Override methods
         protected override void OnResume()
         {
             base.OnResume();
@@ -126,6 +130,8 @@ namespace HonestFootball.Android
                     return base.OnOptionsItemSelected(item);
             }
         }
+
+        #endregion
 
         private void ShowFragment(SupportFragment fragment)
         {
@@ -187,6 +193,7 @@ namespace HonestFootball.Android
             drawerLayout.CloseDrawers();
         }
 
+        #region Get methods
         private void GetClient()
         {
             var client = new Client("Android");
@@ -249,9 +256,12 @@ namespace HonestFootball.Android
         {
             StandingsViewModel standingsVM = new StandingsViewModel();
 
-            await standingsVM.GetStandings();
+            IList<Team> teams = await standingsVM.GetStandings();
         }
 
+        #endregion
+
+        #region Display message methods
         protected void DisplayError(Exception exc)
         {
             string error = exc.Message;
@@ -271,6 +281,8 @@ namespace HonestFootball.Android
             .SetPositiveButton(Android.Resource.String.Ok, (IDialogInterfaceOnClickListener)null)
             .Show();
         }
+
+        #endregion
     }
 
     public class Client

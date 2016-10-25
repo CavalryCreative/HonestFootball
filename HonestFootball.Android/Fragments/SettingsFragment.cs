@@ -10,6 +10,8 @@ using Android.Runtime;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
+using HonestFootball.ViewModels;
+using HonestFootball.Models;
 
 namespace HonestFootball.Android.Fragments
 {
@@ -18,16 +20,19 @@ namespace HonestFootball.Android.Fragments
         public override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+            
+            SettingsViewModel settingsVM = new SettingsViewModel();
 
-            // Create your fragment here
+            IList<Team> teams = settingsVM.GetTeams();
         }
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
-            // Use this to return your custom view for this Fragment
-            // return inflater.Inflate(Resource.Layout.YourFragment, container, false);
+            var view = inflater.Inflate(Resource.Layout.TeamRow, container, false);
 
-            return base.OnCreateView(inflater, container, savedInstanceState);
+            var name = view.FindViewById<TextView>(Resource.Id.nameTextView);
+            //name.Text = tea
+            return view;
         }
     }
 }

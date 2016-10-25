@@ -11,12 +11,11 @@ namespace HonestFootball.ViewModels
     {
         public IList<Team> Teams { get; set; }
 
-        public async Task GetStandings()
+        public async Task<IList<Team>> GetStandings()
         {
-            //if (Conversation == null)
-            //    throw new Exception("No conversation.");
-
             IsBusy = true;
+
+            IList<Team> teams = new List<Team>();
 
             try
             {
@@ -25,7 +24,7 @@ namespace HonestFootball.ViewModels
                 var webRequest = (HttpWebRequest)WebRequest.Create(uri);
                 webRequest.Method = "GET";
                 var webResponse = await webRequest.GetResponseAsync();
-              
+
                 var reader = new StreamReader(webResponse.GetResponseStream());
                 string s = reader.ReadToEnd();
 
@@ -39,13 +38,16 @@ namespace HonestFootball.ViewModels
                     {
                         team.Name = prop.SelectToken("team_name").ToString();
                     }
-                }
 
+                    teams.Add(team);
+                }
             }
             finally
             {
                 IsBusy = false;
             }
+
+            return teams;
         }
     }
 }

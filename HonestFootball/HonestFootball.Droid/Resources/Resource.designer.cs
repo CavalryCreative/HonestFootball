@@ -1492,17 +1492,17 @@ namespace HonestFootball.Droid
 			// aapt resource value: 0x7f0b0060
 			public const int action_divider = 2131427424;
 			
-			// aapt resource value: 0x7f0b006a
-			public const int action_fragment1 = 2131427434;
-			
 			// aapt resource value: 0x7f0b006b
-			public const int action_fragment2 = 2131427435;
+			public const int action_fragment1 = 2131427435;
 			
 			// aapt resource value: 0x7f0b006c
-			public const int action_fragment3 = 2131427436;
+			public const int action_fragment2 = 2131427436;
 			
-			// aapt resource value: 0x7f0b0069
-			public const int action_help = 2131427433;
+			// aapt resource value: 0x7f0b006d
+			public const int action_fragment3 = 2131427437;
+			
+			// aapt resource value: 0x7f0b006a
+			public const int action_help = 2131427434;
 			
 			// aapt resource value: 0x7f0b0002
 			public const int action_menu_divider = 2131427330;
@@ -1644,6 +1644,9 @@ namespace HonestFootball.Droid
 			
 			// aapt resource value: 0x7f0b0014
 			public const int multiply = 2131427348;
+			
+			// aapt resource value: 0x7f0b0069
+			public const int nameTextView = 2131427433;
 			
 			// aapt resource value: 0x7f0b001f
 			public const int never = 2131427359;
@@ -1961,6 +1964,9 @@ namespace HonestFootball.Droid
 			
 			// aapt resource value: 0x7f03002b
 			public const int support_simple_spinner_dropdown_item = 2130903083;
+			
+			// aapt resource value: 0x7f03002c
+			public const int TeamRow = 2130903084;
 			
 			static Layout()
 			{

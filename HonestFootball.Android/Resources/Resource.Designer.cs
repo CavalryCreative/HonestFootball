@@ -1888,17 +1888,17 @@ namespace HonestFootball.Android
 			// aapt resource value: 0x7f06003c
 			public const int action_mode_close_button = 2131099708;
 			
+			// aapt resource value: 0x7f06008d
+			public const int action_news = 2131099789;
+			
 			// aapt resource value: 0x7f06008c
-			public const int action_news = 2131099788;
+			public const int action_settings = 2131099788;
 			
 			// aapt resource value: 0x7f06008b
-			public const int action_settings = 2131099787;
+			public const int action_share = 2131099787;
 			
 			// aapt resource value: 0x7f06008a
-			public const int action_share = 2131099786;
-			
-			// aapt resource value: 0x7f060089
-			public const int action_standings = 2131099785;
+			public const int action_standings = 2131099786;
 			
 			// aapt resource value: 0x7f06003d
 			public const int activity_chooser_view_content = 2131099709;
@@ -2079,6 +2079,9 @@ namespace HonestFootball.Android
 			
 			// aapt resource value: 0x7f060016
 			public const int multiply = 2131099670;
+			
+			// aapt resource value: 0x7f060089
+			public const int nameTextView = 2131099785;
 			
 			// aapt resource value: 0x7f060079
 			public const int nav_view_left = 2131099769;
@@ -2477,6 +2480,9 @@ namespace HonestFootball.Android
 			
 			// aapt resource value: 0x7f030036
 			public const int support_simple_spinner_dropdown_item = 2130903094;
+			
+			// aapt resource value: 0x7f030037
+			public const int TeamRow = 2130903095;
 			
 			static Layout()
 			{
