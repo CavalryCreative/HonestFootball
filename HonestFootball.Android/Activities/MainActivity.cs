@@ -21,16 +21,16 @@ using System.Collections.Generic;
 
 namespace HonestFootball.Android
 {
-    [Activity(Label = "HonestFootball.Android", MainLauncher = true, Icon = "@drawable/icon")]
+    [Activity(Label = "HonestFootball.Android", Icon = "@drawable/icon")]
     public class MainActivity : AppCompatActivity
     {
         DrawerLayout drawerLayout;
         private FrameLayout mFragmentContainer;
         private SupportFragment mCurrentFragment;
-        private SettingsFragment settingsFragment;
+        private StandingsFragment standingsFragment;
         private ShareFragment shareFragment;
         private Stack<SupportFragment> mStackFragments;
-
+        
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
@@ -51,14 +51,14 @@ namespace HonestFootball.Android
             //Create fragments
             mFragmentContainer = FindViewById<FrameLayout>(Resource.Id.fragmentContainer);
 
-            settingsFragment = new SettingsFragment();
+            standingsFragment = new StandingsFragment();
             shareFragment = new ShareFragment();
           
             mStackFragments = new Stack<SupportFragment>();
 
             var trans = SupportFragmentManager.BeginTransaction();
-            trans.Add(Resource.Id.fragmentContainer, settingsFragment, "SettingsFragment");
-            trans.Hide(settingsFragment);
+            trans.Add(Resource.Id.fragmentContainer, standingsFragment, "StandingsFragment");
+            trans.Hide(standingsFragment);
 
             trans.Add(Resource.Id.fragmentContainer, shareFragment, "ShareFragment");
             trans.Hide(shareFragment);
@@ -78,9 +78,6 @@ namespace HonestFootball.Android
             var drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, Resource.String.open_drawer, Resource.String.close_drawer);
             drawerLayout.AddDrawerListener(drawerToggle);
             drawerToggle.SyncState();
-
-            //Populate standings
-            GetStandings();
 
             try
             {
@@ -107,6 +104,20 @@ namespace HonestFootball.Android
             }
         }
 
+        public override void OnBackPressed()
+        {
+            if (SupportFragmentManager.BackStackEntryCount > 0)
+            {
+                SupportFragmentManager.PopBackStack();
+                mCurrentFragment = mStackFragments.Pop();
+            }
+
+            else
+            {
+                base.OnBackPressed();
+            }
+        }
+
         public override bool OnCreateOptionsMenu(IMenu menu)
         {
             //MenuInflater.Inflate(Resource.Menu.ConversationsMenu, menu);
@@ -123,7 +134,7 @@ namespace HonestFootball.Android
                     return true;
 
                 case Resource.Id.action_standings:
-                    ShowFragment(settingsFragment);
+                    ShowFragment(standingsFragment);
                     return true;
 
                 default:
@@ -155,20 +166,6 @@ namespace HonestFootball.Android
             trans.Commit();
 
             mCurrentFragment = fragment;
-        }
-
-        public override void OnBackPressed()
-        {
-            if (SupportFragmentManager.BackStackEntryCount > 0)
-            {
-                SupportFragmentManager.PopBackStack();
-                mCurrentFragment = mStackFragments.Pop();
-            }
-
-            else
-            {
-                base.OnBackPressed();
-            }
         }
 
         void NavigationView_NavigationItemSelected(object sender, NavigationView.NavigationItemSelectedEventArgs e)

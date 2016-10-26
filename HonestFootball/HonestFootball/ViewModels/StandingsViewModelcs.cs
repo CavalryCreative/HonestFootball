@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using HonestFootball.Models;
 using System.Threading.Tasks;
 using System.Net;
@@ -37,6 +38,11 @@ namespace HonestFootball.ViewModels
                     foreach (JProperty prop in content.Properties())
                     {
                         team.Name = prop.SelectToken("team_name").ToString();
+                        team.GamesPlayed = Convert.ToByte(prop.SelectToken("home_gp"));
+                        team.GamesWon = Convert.ToByte(prop.SelectToken("home_w"));
+                        team.GamesDrawn = Convert.ToByte(prop.SelectToken("home_d"));
+                        team.GamesLost = Convert.ToByte(prop.SelectToken("home_l"));
+                        team.Points = Convert.ToByte(prop.SelectToken("points"));
                     }
 
                     teams.Add(team);

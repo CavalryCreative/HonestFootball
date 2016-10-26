@@ -99,11 +99,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Activities\SettingsActivity.cs" />
     <Compile Include="Core\DroidSettings.cs" />
+    <Compile Include="Core\SettingsAdapter.cs" />
     <Compile Include="Core\StandingAdapter.cs" />
+    <Compile Include="Core\StandingsViewHolder.cs" />
     <Compile Include="Core\WebService.cs" />
     <Compile Include="Fragments\ShareFragment.cs" />
-    <Compile Include="Fragments\SettingsFragment.cs" />
+    <Compile Include="Fragments\StandingsFragment.cs" />
     <Compile Include="Helpers\Settings.cs" />
     <Compile Include="Activities\MainActivity.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
@@ -128,6 +131,9 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\TeamRow.axml" />
+    <AndroidResource Include="Resources\layout\StandingsRow.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\Main.axml">

@@ -1888,17 +1888,17 @@ namespace HonestFootball.Android
 			// aapt resource value: 0x7f06003c
 			public const int action_mode_close_button = 2131099708;
 			
-			// aapt resource value: 0x7f06008d
-			public const int action_news = 2131099789;
+			// aapt resource value: 0x7f060094
+			public const int action_news = 2131099796;
 			
-			// aapt resource value: 0x7f06008c
-			public const int action_settings = 2131099788;
+			// aapt resource value: 0x7f060093
+			public const int action_settings = 2131099795;
 			
-			// aapt resource value: 0x7f06008b
-			public const int action_share = 2131099787;
+			// aapt resource value: 0x7f060092
+			public const int action_share = 2131099794;
 			
-			// aapt resource value: 0x7f06008a
-			public const int action_standings = 2131099786;
+			// aapt resource value: 0x7f060091
+			public const int action_standings = 2131099793;
 			
 			// aapt resource value: 0x7f06003d
 			public const int activity_chooser_view_content = 2131099709;
@@ -2023,6 +2023,18 @@ namespace HonestFootball.Android
 			// aapt resource value: 0x7f060074
 			public const int fragmentContainer = 2131099764;
 			
+			// aapt resource value: 0x7f06008e
+			public const int gamesDrawnTextView = 2131099790;
+			
+			// aapt resource value: 0x7f06008f
+			public const int gamesLostView = 2131099791;
+			
+			// aapt resource value: 0x7f06008c
+			public const int gamesPlayedTextView = 2131099788;
+			
+			// aapt resource value: 0x7f06008d
+			public const int gamesWonTextView = 2131099789;
+			
 			// aapt resource value: 0x7f060005
 			public const int home = 2131099653;
 			
@@ -2080,14 +2092,14 @@ namespace HonestFootball.Android
 			// aapt resource value: 0x7f060016
 			public const int multiply = 2131099670;
 			
-			// aapt resource value: 0x7f060089
-			public const int nameTextView = 2131099785;
-			
-			// aapt resource value: 0x7f060079
-			public const int nav_view_left = 2131099769;
+			// aapt resource value: 0x7f06008b
+			public const int nameTextView = 2131099787;
 			
 			// aapt resource value: 0x7f06007a
-			public const int nav_view_right = 2131099770;
+			public const int nav_view_left = 2131099770;
+			
+			// aapt resource value: 0x7f060079
+			public const int nav_view_right = 2131099769;
 			
 			// aapt resource value: 0x7f06006d
 			public const int navigation_header_container = 2131099757;
@@ -2109,6 +2121,9 @@ namespace HonestFootball.Android
 			
 			// aapt resource value: 0x7f060029
 			public const int pin = 2131099689;
+			
+			// aapt resource value: 0x7f060090
+			public const int pointsTextView = 2131099792;
 			
 			// aapt resource value: 0x7f060006
 			public const int progress_circular = 2131099654;
@@ -2173,6 +2188,12 @@ namespace HonestFootball.Android
 			// aapt resource value: 0x7f060068
 			public const int select_dialog_listview = 2131099752;
 			
+			// aapt resource value: 0x7f060088
+			public const int settingsListView = 2131099784;
+			
+			// aapt resource value: 0x7f060089
+			public const int shareFragment = 2131099785;
+			
 			// aapt resource value: 0x7f060053
 			public const int shortcut = 2131099731;
 			
@@ -2208,6 +2229,9 @@ namespace HonestFootball.Android
 			
 			// aapt resource value: 0x7f06001a
 			public const int src_over = 2131099674;
+			
+			// aapt resource value: 0x7f06008a
+			public const int standingsListView = 2131099786;
 			
 			// aapt resource value: 0x7f060031
 			public const int start = 2131099697;
@@ -2250,9 +2274,6 @@ namespace HonestFootball.Android
 			
 			// aapt resource value: 0x7f060069
 			public const int touch_outside = 2131099753;
-			
-			// aapt resource value: 0x7f060088
-			public const int txtFragment1 = 2131099784;
 			
 			// aapt resource value: 0x7f060009
 			public const int up = 2131099657;
@@ -2479,10 +2500,13 @@ namespace HonestFootball.Android
 			public const int Standings = 2130903093;
 			
 			// aapt resource value: 0x7f030036
-			public const int support_simple_spinner_dropdown_item = 2130903094;
+			public const int StandingsRow = 2130903094;
 			
 			// aapt resource value: 0x7f030037
-			public const int TeamRow = 2130903095;
+			public const int support_simple_spinner_dropdown_item = 2130903095;
+			
+			// aapt resource value: 0x7f030038
+			public const int TeamRow = 2130903096;
 			
 			static Layout()
 			{

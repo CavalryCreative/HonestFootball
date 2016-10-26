@@ -16,9 +16,9 @@ namespace HonestFootball.ViewModels
             //settings.IsSoundOn = IsSoundOn;
         }
 
-        public IList<Team> GetTeams()
+        public List<Team> GetTeams()
         {
-            IList<Team> teams = new List<Team>();
+            List<Team> teams = new List<Team>();
 
             Team arsenal = new Team();
             arsenal.APIId = "9002";

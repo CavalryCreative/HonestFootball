@@ -1,24 +1,20 @@
-using System;
 using System.Collections.Generic;
-
 using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
 using Android.Views;
 using HonestFootball.Models;
 using Android.Widget;
+using HonestFootball.Android.Fragments;
 
 namespace HonestFootball.Android.Core
 {
     public class StandingAdapter : BaseAdapter<Team>
     {
-        Fragment context;
+        Activity context;
         List<Team> teams;
 
-        public StandingAdapter(Fragment context, List<Team> teams)
+        public StandingAdapter(StandingsFragment context, List<Team> teams)
         {
-            this.context = context;
+            this.context = context.Activity;
             this.teams = teams;
         }
 
@@ -45,7 +41,43 @@ namespace HonestFootball.Android.Core
 
         public override View GetView(int position, View convertView, ViewGroup parent)
         {
-            throw new NotImplementedException();
+            var team = teams[position];
+            View view = convertView;
+
+            if (view == null)
+            {
+                view = context.LayoutInflater.Inflate(Resource.Layout.StandingsRow, null);
+
+                var teamName = view.FindViewById<TextView>(Resource.Id.nameTextView);
+                var gamesPlayed = view.FindViewById<TextView>(Resource.Id.gamesPlayedTextView);
+                var gamesWon = view.FindViewById<TextView>(Resource.Id.gamesWonTextView);
+                var gamesDrawn = view.FindViewById<TextView>(Resource.Id.gamesDrawnTextView);
+                var gamesLost = view.FindViewById<TextView>(Resource.Id.gamesLostView);
+                var points = view.FindViewById<TextView>(Resource.Id.pointsTextView);
+
+                var vh = new StandingsViewHolder()
+                {
+                    Name = teamName,
+                    GamesPlayed = gamesPlayed,
+                    GamesWon = gamesWon,
+                    GamesDrawn = gamesDrawn,
+                    GamesLost = gamesLost,
+                    Points = points
+                };
+
+                view.Tag = vh;
+            }
+
+            var holder = (StandingsViewHolder)view.Tag;
+             
+            holder.Name.Text = team.Name;
+            holder.GamesPlayed.Text = team.GamesPlayed.ToString();
+            holder.GamesWon.Text = team.GamesWon.ToString();
+            holder.GamesDrawn.Text = team.GamesDrawn.ToString();
+            holder.GamesLost.Text = team.GamesLost.ToString();
+            holder.Points.Text = team.Points.ToString();
+
+            return view;
         }
     }
 }

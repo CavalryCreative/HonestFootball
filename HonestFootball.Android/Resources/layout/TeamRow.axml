@@ -5,10 +5,10 @@
     android:layout_height="match_parent"
     android:minWidth="25dp"
     android:minHeight="25dp"
-    android:paddingBottom ="4dp">
-  <TextView
-    android:id="@+id/nameTextView"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:paddingLeft ="5dp" />
+    android:paddingBottom="4dp">
+    <TextView
+        android:id="@+id/nameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="5dp" />
 </RelativeLayout>
