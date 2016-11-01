@@ -1981,8 +1981,8 @@ namespace HonestFootball.Android
 			// aapt resource value: 0x7f06000e
 			public const int disableHome = 2131099662;
 			
-			// aapt resource value: 0x7f060072
-			public const int drawer_layout = 2131099762;
+			// aapt resource value: 0x7f060073
+			public const int drawer_layout = 2131099763;
 			
 			// aapt resource value: 0x7f06005c
 			public const int edit_query = 2131099740;
@@ -2062,6 +2062,9 @@ namespace HonestFootball.Android
 			// aapt resource value: 0x7f06002f
 			public const int left = 2131099695;
 			
+			// aapt resource value: 0x7f060079
+			public const int left_drawer = 2131099769;
+			
 			// aapt resource value: 0x7f060080
 			public const int line1 = 2131099776;
 			
@@ -2094,12 +2097,6 @@ namespace HonestFootball.Android
 			
 			// aapt resource value: 0x7f06008b
 			public const int nameTextView = 2131099787;
-			
-			// aapt resource value: 0x7f06007a
-			public const int nav_view_left = 2131099770;
-			
-			// aapt resource value: 0x7f060079
-			public const int nav_view_right = 2131099769;
 			
 			// aapt resource value: 0x7f06006d
 			public const int navigation_header_container = 2131099757;
@@ -2136,6 +2133,9 @@ namespace HonestFootball.Android
 			
 			// aapt resource value: 0x7f060030
 			public const int right = 2131099696;
+			
+			// aapt resource value: 0x7f06007a
+			public const int right_drawer = 2131099770;
 			
 			// aapt resource value: 0x7f060017
 			public const int screen = 2131099671;
@@ -2263,8 +2263,8 @@ namespace HonestFootball.Android
 			// aapt resource value: 0x7f060048
 			public const int title_template = 2131099720;
 			
-			// aapt resource value: 0x7f060073
-			public const int toolbar = 2131099763;
+			// aapt resource value: 0x7f060072
+			public const int toolbar = 2131099762;
 			
 			// aapt resource value: 0x7f060032
 			public const int top = 2131099698;
