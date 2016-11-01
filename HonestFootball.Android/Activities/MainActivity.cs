@@ -21,16 +21,13 @@ using System.Collections.Generic;
 
 namespace HonestFootball.Android
 {
-    [Activity(Label = "HonestFootball.Android", Icon = "@drawable/icon")]
+    [Activity(Label = "HonestFootball.Android", MainLauncher = true, Icon = "@drawable/icon")]
     public class MainActivity : AppCompatActivity
     {
         DrawerLayout drawerLayout;
-        private FrameLayout mFragmentContainer;
-        private SupportFragment mCurrentFragment;
-        private StandingsFragment standingsFragment;
-        private ShareFragment shareFragment;
-        private Stack<SupportFragment> mStackFragments;
-        
+        private ListView settingListview;
+        private SettingsAdapter settingsAdapter;
+       
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
@@ -48,36 +45,24 @@ namespace HonestFootball.Android
             SetContentView(Resource.Layout.Main);
             drawerLayout = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
 
-            //Create fragments
-            mFragmentContainer = FindViewById<FrameLayout>(Resource.Id.fragmentContainer);
-
-            standingsFragment = new StandingsFragment();
-            shareFragment = new ShareFragment();
-          
-            mStackFragments = new Stack<SupportFragment>();
-
-            var trans = SupportFragmentManager.BeginTransaction();
-            trans.Add(Resource.Id.fragmentContainer, standingsFragment, "StandingsFragment");
-            trans.Hide(standingsFragment);
-
-            trans.Add(Resource.Id.fragmentContainer, shareFragment, "ShareFragment");
-            trans.Hide(shareFragment);
-
             // Init toolbar
             var toolbar = FindViewById<SupportToolbar>(Resource.Id.toolbar);
             SetSupportActionBar(toolbar);
-
-            // Attach item selected handler to navigation view
-            var navigationViewLeft = FindViewById<NavigationView>(Resource.Id.nav_view_left);
-            navigationViewLeft.NavigationItemSelected += NavigationView_NavigationItemSelected;
-
-            var navigationViewRight = FindViewById<NavigationView>(Resource.Id.nav_view_right);
-            navigationViewRight.NavigationItemSelected += NavigationView_NavigationItemSelected;
 
             // Create ActionBarDrawerToggle button and add it to the toolbar
             var drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, Resource.String.open_drawer, Resource.String.close_drawer);
             drawerLayout.AddDrawerListener(drawerToggle);
             drawerToggle.SyncState();
+
+            //Get settings list
+            SettingsViewModel settingsVM = new SettingsViewModel();
+            List<Team> teams = new List<Team>();
+
+            teams = settingsVM.GetTeams();
+
+            settingListview = FindViewById<ListView>(Resource.Id.settingsListView);
+            settingsAdapter = new SettingsAdapter(this, teams);
+            settingListview.Adapter = settingsAdapter;
 
             try
             {
@@ -104,19 +89,19 @@ namespace HonestFootball.Android
             }
         }
 
-        public override void OnBackPressed()
-        {
-            if (SupportFragmentManager.BackStackEntryCount > 0)
-            {
-                SupportFragmentManager.PopBackStack();
-                mCurrentFragment = mStackFragments.Pop();
-            }
+        //public override void OnBackPressed()
+        //{
+        //    if (SupportFragmentManager.BackStackEntryCount > 0)
+        //    {
+        //        SupportFragmentManager.PopBackStack();
+        //        mCurrentFragment = mStackFragments.Pop();
+        //    }
 
-            else
-            {
-                base.OnBackPressed();
-            }
-        }
+        //    else
+        //    {
+        //        base.OnBackPressed();
+        //    }
+        //}
 
         public override bool OnCreateOptionsMenu(IMenu menu)
         {
@@ -125,70 +110,70 @@ namespace HonestFootball.Android
             return true;
         }
 
-        public override bool OnOptionsItemSelected(IMenuItem item)
-        {
-            switch (item.ItemId)
-            {
-                case Resource.Id.action_share:
-                    ShowFragment(shareFragment);
-                    return true;
+        //public override bool OnOptionsItemSelected(IMenuItem item)
+        //{
+        //    switch (item.ItemId)
+        //    {
+        //        case Resource.Id.action_share:
+        //            ShowFragment(shareFragment);
+        //            return true;
 
-                case Resource.Id.action_standings:
-                    ShowFragment(standingsFragment);
-                    return true;
+        //        case Resource.Id.action_standings:
+        //            ShowFragment(standingsFragment);
+        //            return true;
 
-                default:
-                    return base.OnOptionsItemSelected(item);
-            }
-        }
+        //        default:
+        //            return base.OnOptionsItemSelected(item);
+        //    }
+        //}
 
         #endregion
 
-        private void ShowFragment(SupportFragment fragment)
-        {
-            if (fragment.IsVisible)
-            {
-                return;
-            }
+        //private void ShowFragment(SupportFragment fragment)
+        //{
+        //    if (fragment.IsVisible)
+        //    {
+        //        return;
+        //    }
 
-            var trans = SupportFragmentManager.BeginTransaction();
+        //    var trans = SupportFragmentManager.BeginTransaction();
 
-            trans.SetCustomAnimations(Resource.Animation.slide_in, Resource.Animation.slide_out, Resource.Animation.slide_in, Resource.Animation.slide_out);
+        //    trans.SetCustomAnimations(Resource.Animation.slide_in, Resource.Animation.slide_out, Resource.Animation.slide_in, Resource.Animation.slide_out);
 
-            fragment.View.BringToFront();
-            mCurrentFragment.View.BringToFront();
+        //    fragment.View.BringToFront();
+        //    mCurrentFragment.View.BringToFront();
 
-            trans.Hide(mCurrentFragment);
-            trans.Show(fragment);
+        //    trans.Hide(mCurrentFragment);
+        //    trans.Show(fragment);
 
-            trans.AddToBackStack(null);
-            mStackFragments.Push(mCurrentFragment);
-            trans.Commit();
+        //    trans.AddToBackStack(null);
+        //    mStackFragments.Push(mCurrentFragment);
+        //    trans.Commit();
 
-            mCurrentFragment = fragment;
-        }
+        //    mCurrentFragment = fragment;
+        //}
 
-        void NavigationView_NavigationItemSelected(object sender, NavigationView.NavigationItemSelectedEventArgs e)
-        {
-            switch (e.MenuItem.ItemId)
-            {
-                case (Resource.Id.action_settings):
-                    // React on 'Settings' selection
-                    break;
-                case (Resource.Id.action_share):
-                    // React on 'Share' selection
-                    break;
-                case (Resource.Id.action_standings):
-                    // React on 'Standings' selection
-                    break;
-                case (Resource.Id.action_news):
-                    // React on 'Discussion' selection
-                    break;
-            }
+        //void NavigationView_NavigationItemSelected(object sender, NavigationView.NavigationItemSelectedEventArgs e)
+        //{
+        //    switch (e.MenuItem.ItemId)
+        //    {
+        //        case (Resource.Id.action_settings):
+        //            // React on 'Settings' selection
+        //            break;
+        //        case (Resource.Id.action_share):
+        //            // React on 'Share' selection
+        //            break;
+        //        case (Resource.Id.action_standings):
+        //            // React on 'Standings' selection
+        //            break;
+        //        case (Resource.Id.action_news):
+        //            // React on 'Discussion' selection
+        //            break;
+        //    }
 
-            // Close drawer
-            drawerLayout.CloseDrawers();
-        }
+        //    // Close drawer
+        //    drawerLayout.CloseDrawers();
+        //}
 
         #region Get methods
         private void GetClient()

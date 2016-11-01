@@ -17,11 +17,10 @@ using HonestFootball.Android.Fragments;
 
 namespace HonestFootball.Android.Activities
 {
-    [Activity(Label = "SettingsActivity", MainLauncher = true)]
+    [Activity(Label = "SettingsActivity")]
     public class SettingsActivity : Activity
     {
-        private ListView settingListview;
-        private SettingsAdapter settingsAdapter;
+       
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -34,15 +33,7 @@ namespace HonestFootball.Android.Activities
             ServiceContainer.Register<CommentsViewModel>();
             ServiceContainer.Register<StandingsViewModel>();
 
-            //Get settings list
-            SettingsViewModel settingsVM = new SettingsViewModel();
-            List<Team> teams = new List<Team>();
-
-            teams = settingsVM.GetTeams();
-
-            settingListview = FindViewById<ListView>(Resource.Id.settingsListView);
-            settingsAdapter = new SettingsAdapter(this, teams);
-            settingListview.Adapter = settingsAdapter;
+           
         }
     }
 }
