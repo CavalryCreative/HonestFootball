@@ -120,7 +120,7 @@
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
     <AndroidResource Include="Resources\layout\Header.axml" />
-    <AndroidResource Include="Resources\layout\Standings.axml">
+    <AndroidResource Include="Resources\layout\Table.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\News.axml">
@@ -133,7 +133,13 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\TeamRow.axml" />
-    <AndroidResource Include="Resources\layout\StandingsRow.axml">
+    <AndroidResource Include="Resources\layout\TableRow.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\Lineup.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\Fixtures.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

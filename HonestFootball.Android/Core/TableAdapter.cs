@@ -46,7 +46,7 @@ namespace HonestFootball.Android.Core
 
             if (view == null)
             {
-                view = context.LayoutInflater.Inflate(Resource.Layout.StandingsRow, null);
+                view = context.LayoutInflater.Inflate(Resource.Layout.TableRow, null);
 
                 var teamName = view.FindViewById<TextView>(Resource.Id.nameTextView);
                 var gamesPlayed = view.FindViewById<TextView>(Resource.Id.gamesPlayedTextView);

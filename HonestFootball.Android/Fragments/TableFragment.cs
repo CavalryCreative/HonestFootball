@@ -18,29 +18,28 @@ namespace HonestFootball.Android.Fragments
 {
     public class TableFragment : Fragment
     {
-        private ListView listview;
-        private TableAdapter adapter;
+        //private ListView listview;
+        //private TableAdapter adapter;
 
-        public async override void OnCreate(Bundle savedInstanceState)
+        public override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             
-            TableViewModel tableVM = new TableViewModel();
+            //TableViewModel tableVM = new TableViewModel();
 
-            IList<Team> teams = await tableVM.GetStandings();
+            //IList<Team> teams = await tableVM.GetStandings();
 
-            listview = this.Activity.FindViewById<ListView>(Resource.Id.standingsListView);
-            adapter = new TableAdapter(this, teams.ToList());
-            listview.Adapter = adapter;
+            //listview = this.Activity.FindViewById<ListView>(Resource.Id.standingsListView);
+            //adapter = new TableAdapter(this, teams.ToList());
+            //listview.Adapter = adapter;
         }
 
-        //public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-        //{
-        //    var view = inflater.Inflate(Resource.Layout.StandingsRow, container, false);
+        public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+        {
+            // Use this to return your custom view for this Fragment
+            // return inflater.Inflate(Resource.Layout.YourFragment, container, false);
 
-        //    var name = view.FindViewById<TextView>(Resource.Id.nameTextView);
-        //    //name.Text = tea
-        //    return view;
-        //}
+            return base.OnCreateView(inflater, container, savedInstanceState);
+        }
     }
 }

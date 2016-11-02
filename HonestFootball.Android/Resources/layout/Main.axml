@@ -12,30 +12,33 @@
         android:background="?attr/colorPrimary"
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
-    <android.support.v4.widget.DrawerLayout
-        android:id="@+id/drawer_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    <!-- The Main Content View -->
-        <FrameLayout
-            android:id="@+id/fragmentContainer"
+  
+      <android.support.v4.widget.DrawerLayout
+          android:id="@+id/drawer_layout"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent">
+          <ScrollView
+            android:minWidth="25px"
+            android:minHeight="25px"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-          <android.support.v4.view.ViewPager
-              android:id="@+id/statsViewPager"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
-            <android.support.v4.view.PagerTabStrip
+            android:layout_height="wrap_content"
+            android:id="@+id/scrollView1">
+
+            <!-- The Main Content View -->
+            <LinearLayout
+                android:id="@+id/fragmentContainer"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top" />
-          </android.support.v4.view.ViewPager>
-            <TableLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:minWidth="25px"
-                android:minHeight="25px">
+                android:layout_height="match_parent">
+              <android.support.v4.view.ViewPager
+                  android:id="@+id/statsViewPager"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent">
+                <android.support.v4.view.PagerTabStrip
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top" />
+              </android.support.v4.view.ViewPager>
+            
                 <TextView
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:layout_width="match_parent"
@@ -56,9 +59,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/matchTime" />
-            </TableLayout>
-        </FrameLayout>
-    <!-- The Left Navigation Drawer -->
+            
+            </LinearLayout>
+          </ScrollView>
+        <!-- The Left Navigation Drawer -->
         <ListView
             android:id="@+id/settingsListView"
             android:layout_width="240dp"
@@ -77,5 +81,5 @@
             android:divider="#E2E2E2"
             android:dividerHeight="1dp"
             android:background="#9E9E9E" />
-    </android.support.v4.widget.DrawerLayout>
+      </android.support.v4.widget.DrawerLayout>
 </LinearLayout>
