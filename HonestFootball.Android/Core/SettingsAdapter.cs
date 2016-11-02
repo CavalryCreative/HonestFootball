@@ -54,7 +54,7 @@ namespace HonestFootball.Android.Core
 
                 var teamName = view.FindViewById<TextView>(Resource.Id.nameTextView);
 
-                var vh = new StandingsViewHolder()
+                var vh = new TableViewHolder()
                 {
                     Name = teamName                  
                 };
@@ -62,7 +62,7 @@ namespace HonestFootball.Android.Core
                 view.Tag = vh;
             }
 
-            var holder = (StandingsViewHolder)view.Tag;
+            var holder = (TableViewHolder)view.Tag;
 
             holder.Name.Text = team.Name;
            

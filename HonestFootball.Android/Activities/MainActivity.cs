@@ -4,11 +4,13 @@ using Android.Content;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
+using Android.Runtime;
 using Android.Support.V4.Widget;
 using Android.Support.V7.App;
 using SupportToolbar = Android.Support.V7.Widget.Toolbar;
 using SupportFragment = Android.Support.V4.App.Fragment;
 using AlertDialog = Android.Support.V7.App.AlertDialog;
+using ViewPager = Android.Support.V4.View.ViewPager;
 using Android.Support.Design.Widget;
 using Microsoft.AspNet.SignalR.Client;
 using Newtonsoft.Json.Linq;
@@ -39,7 +41,7 @@ namespace HonestFootball.Android
             ServiceContainer.Register<BaseViewModel>();
             ServiceContainer.Register<SettingsViewModel>();
             ServiceContainer.Register<CommentsViewModel>();
-            ServiceContainer.Register<StandingsViewModel>();
+            ServiceContainer.Register<TableViewModel>();
 
             // Create UI
             SetContentView(Resource.Layout.Main);
@@ -63,6 +65,24 @@ namespace HonestFootball.Android
             settingListview = FindViewById<ListView>(Resource.Id.settingsListView);
             settingsAdapter = new SettingsAdapter(this, teams);
             settingListview.Adapter = settingsAdapter;
+
+            //Load stat fragments
+            var fragments = new SupportFragment[]
+            {
+                new LineupFragment(),
+                new TableFragment(),
+                new FixturesFragment()
+            };
+
+            var titles = CharSequence.ArrayFromStringArray(new []
+            {
+                "Lineups",
+                "Table",
+                "Fixtures"
+            });
+
+            var viewPager = FindViewById<ViewPager>(Resource.Id.statsViewPager);
+            viewPager.Adapter = new StatsPageAdapter(base.SupportFragmentManager, fragments, titles);
 
             try
             {
@@ -236,9 +256,9 @@ namespace HonestFootball.Android
 
         private async void GetStandings()
         {
-            StandingsViewModel standingsVM = new StandingsViewModel();
+            TableViewModel tableVM = new TableViewModel();
 
-            IList<Team> teams = await standingsVM.GetStandings();
+            IList<Team> teams = await tableVM.GetStandings();
         }
 
         #endregion

@@ -7,12 +7,12 @@ using HonestFootball.Android.Fragments;
 
 namespace HonestFootball.Android.Core
 {
-    public class StandingAdapter : BaseAdapter<Team>
+    public class TableAdapter : BaseAdapter<Team>
     {
         Activity context;
         List<Team> teams;
 
-        public StandingAdapter(StandingsFragment context, List<Team> teams)
+        public TableAdapter(TableFragment context, List<Team> teams)
         {
             this.context = context.Activity;
             this.teams = teams;
@@ -55,7 +55,7 @@ namespace HonestFootball.Android.Core
                 var gamesLost = view.FindViewById<TextView>(Resource.Id.gamesLostView);
                 var points = view.FindViewById<TextView>(Resource.Id.pointsTextView);
 
-                var vh = new StandingsViewHolder()
+                var vh = new TableViewHolder()
                 {
                     Name = teamName,
                     GamesPlayed = gamesPlayed,
@@ -68,7 +68,7 @@ namespace HonestFootball.Android.Core
                 view.Tag = vh;
             }
 
-            var holder = (StandingsViewHolder)view.Tag;
+            var holder = (TableViewHolder)view.Tag;
              
             holder.Name.Text = team.Name;
             holder.GamesPlayed.Text = team.GamesPlayed.ToString();

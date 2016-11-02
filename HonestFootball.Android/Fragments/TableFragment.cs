@@ -16,21 +16,21 @@ using HonestFootball.Android.Core;
 
 namespace HonestFootball.Android.Fragments
 {
-    public class StandingsFragment : Fragment
+    public class TableFragment : Fragment
     {
         private ListView listview;
-        private StandingAdapter adapter;
+        private TableAdapter adapter;
 
         public async override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             
-            StandingsViewModel settingsVM = new StandingsViewModel();
+            TableViewModel tableVM = new TableViewModel();
 
-            IList<Team> teams = await settingsVM.GetStandings();
+            IList<Team> teams = await tableVM.GetStandings();
 
             listview = this.Activity.FindViewById<ListView>(Resource.Id.standingsListView);
-            adapter = new StandingAdapter(this, teams.ToList());
+            adapter = new TableAdapter(this, teams.ToList());
             listview.Adapter = adapter;
         }
 

@@ -44,7 +44,7 @@
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\CommentsViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
-    <Compile Include="ViewModels\StandingsViewModelcs.cs" />
+    <Compile Include="ViewModels\TableViewModelcs.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="project.json" />

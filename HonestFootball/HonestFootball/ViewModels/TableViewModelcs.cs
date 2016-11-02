@@ -8,7 +8,7 @@ using Newtonsoft.Json.Linq;
 
 namespace HonestFootball.ViewModels
 {
-    public class StandingsViewModel : BaseViewModel
+    public class TableViewModel : BaseViewModel
     {
         public IList<Team> Teams { get; set; }
 

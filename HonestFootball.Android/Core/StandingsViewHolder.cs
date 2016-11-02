@@ -12,7 +12,7 @@ using Android.Widget;
 
 namespace HonestFootball.Android.Core
 {
-    public class StandingsViewHolder : Java.Lang.Object
+    public class TableViewHolder : Java.Lang.Object
     {      
         public TextView Name { get; set; }
         public TextView GamesPlayed { get; set; }
