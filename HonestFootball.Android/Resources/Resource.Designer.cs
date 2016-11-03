@@ -2230,9 +2230,6 @@ namespace HonestFootball.Android
 			// aapt resource value: 0x7f06001a
 			public const int src_over = 2131099674;
 			
-			// aapt resource value: 0x7f06008b
-			public const int standingsListView = 2131099787;
-			
 			// aapt resource value: 0x7f060031
 			public const int start = 2131099697;
 			
@@ -2247,6 +2244,9 @@ namespace HonestFootball.Android
 			
 			// aapt resource value: 0x7f06000d
 			public const int tabMode = 2131099661;
+			
+			// aapt resource value: 0x7f06008b
+			public const int tableListView = 2131099787;
 			
 			// aapt resource value: 0x7f060087
 			public const int text = 2131099783;

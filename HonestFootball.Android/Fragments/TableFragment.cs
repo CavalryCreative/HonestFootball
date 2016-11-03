@@ -18,20 +18,20 @@ namespace HonestFootball.Android.Fragments
 {
     public class TableFragment : Fragment
     {
-        //private ListView listview;
-        //private TableAdapter adapter;
+        private ListView listview;
+        private TableAdapter adapter;
 
-        public override void OnCreate(Bundle savedInstanceState)
+        public override async void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            
-            //TableViewModel tableVM = new TableViewModel();
 
-            //IList<Team> teams = await tableVM.GetStandings();
+            TableViewModel tableVM = new TableViewModel();
 
-            //listview = this.Activity.FindViewById<ListView>(Resource.Id.standingsListView);
-            //adapter = new TableAdapter(this, teams.ToList());
-            //listview.Adapter = adapter;
+            IList<Team> teams = await tableVM.GetStandings();
+
+            listview = this.Activity.FindViewById<ListView>(Resource.Id.tableListView);
+            adapter = new TableAdapter(this, teams.ToList());
+            listview.Adapter = adapter;
         }
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)

@@ -102,7 +102,7 @@
     <Compile Include="Core\DroidSettings.cs" />
     <Compile Include="Core\SettingsAdapter.cs" />
     <Compile Include="Core\TableAdapter.cs" />
-    <Compile Include="Core\StandingsViewHolder.cs" />
+    <Compile Include="Core\TableViewHolder.cs" />
     <Compile Include="Core\StatsPageAdapter.cs" />
     <Compile Include="Core\WebService.cs" />
     <Compile Include="Fragments\FixturesFragment.cs" />
