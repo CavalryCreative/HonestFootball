@@ -29,7 +29,7 @@ namespace HonestFootball.Android
         DrawerLayout drawerLayout;
         private ListView settingListview;
         private SettingsAdapter settingsAdapter;
-       
+
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
@@ -245,6 +245,17 @@ namespace HonestFootball.Android
                         jokeCommentText.Text = jokeComment;
                         matchScore.Text = evtScore;
                         matchTime.Text = evtMinute;
+
+                        //Return lineups/substitutions
+                        LineupFragment lineUpFragment = new LineupFragment();
+
+                        var trans = SupportFragmentManager.BeginTransaction();
+                        trans.Replace(Resource.Id.lineupLayout, lineUpFragment);
+                        trans.Commit();
+                 
+                        lineUpFragment.SendData("");
+
+                        //Return stats
                     }
                     //else
                     //{
@@ -324,6 +335,11 @@ namespace HonestFootball.Android
                 .Show();
             }
         }
+    }
+
+    public interface IDataFromActivityToLineupFragment
+    {
+        void SendData(String data);
     }
 }
 

@@ -10,10 +10,11 @@ using Android.Runtime;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
+using HonestFootball.Android;
 
 namespace HonestFootball.Android.Fragments
 {
-    public class LineupFragment : Fragment
+    public class LineupFragment : Fragment, IDataFromActivityToLineupFragment
     {
         public override void OnCreate(Bundle savedInstanceState)
         {
@@ -28,6 +29,14 @@ namespace HonestFootball.Android.Fragments
             // return inflater.Inflate(Resource.Layout.YourFragment, container, false);
 
             return base.OnCreateView(inflater, container, savedInstanceState);
+        }
+
+        public void SendData(string data)
+        {
+            //if (data != null)
+            //    text.setText(data);
+
+            throw new NotImplementedException();
         }
     }
 }
