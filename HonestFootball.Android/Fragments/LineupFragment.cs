@@ -16,27 +16,25 @@ namespace HonestFootball.Android.Fragments
 {
     public class LineupFragment : Fragment, IDataFromActivityToLineupFragment
     {
+        TextView txtView;
+
         public override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-
-            // Create your fragment here
         }
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
-            // Use this to return your custom view for this Fragment
-            // return inflater.Inflate(Resource.Layout.YourFragment, container, false);
+            View rootView = inflater.Inflate(Resource.Layout.Lineup, null);
+            txtView = (TextView)rootView.FindViewById(Resource.Id.textView1);
 
-            return base.OnCreateView(inflater, container, savedInstanceState);
+            return rootView;
         }
 
         public void SendData(string data)
         {
-            //if (data != null)
-            //    text.setText(data);
-
-            throw new NotImplementedException();
+            if (data != null)
+                txtView.Text = data;
         }
     }
 }

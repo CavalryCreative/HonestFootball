@@ -211,7 +211,7 @@ namespace HonestFootball.Android
 
                 var y = token.SelectTokens(jPath);
 
-                DroidSettings.TeamApiId = "9378";//TODO - test remove when settings screen set up
+                DroidSettings.TeamApiId = "9249";//TODO - test remove when settings screen set up
 
                 foreach (var childToken in y.Children())
                 {
@@ -253,7 +253,7 @@ namespace HonestFootball.Android
                         trans.Replace(Resource.Id.lineupLayout, lineUpFragment);
                         trans.Commit();
                  
-                        lineUpFragment.SendData("");
+                        lineUpFragment.SendData("Jeff");
 
                         //Return stats
                     }
