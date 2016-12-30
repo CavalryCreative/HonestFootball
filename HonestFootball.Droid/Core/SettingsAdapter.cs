@@ -8,15 +8,16 @@ using Android.Views;
 using HonestFootball.Models;
 using Android.Widget;
 using HonestFootball.Droid.Fragments;
+using Android;
 
 namespace HonestFootball.Droid.Core
 {
     public class SettingsAdapter : BaseAdapter<Team>
     {
         Activity context;
-        List<Team> teams;
+        IList<Team> teams;
 
-        public SettingsAdapter(Activity context, List<Team> teams)
+        public SettingsAdapter(Activity context, IList<Team> teams)
         {
             this.context = context;
             this.teams = teams;

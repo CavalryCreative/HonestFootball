@@ -14,5 +14,11 @@
         android:minHeight="25px"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/lineupListView" />
+        android:id="@+id/homeLineupListView" />
+  <ListView
+       android:minWidth="25px"
+       android:minHeight="25px"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:id="@+id/awayLineupListView" />
 </LinearLayout>

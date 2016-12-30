@@ -20,6 +20,9 @@ using HonestFootball.Droid.Core;
 using HonestFootball.Interfaces;
 using HonestFootball.Droid.Fragments;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+
+using Android;
 
 namespace HonestFootball.Droid
 {
@@ -28,7 +31,9 @@ namespace HonestFootball.Droid
     {
         DrawerLayout drawerLayout;
         private ListView settingListview;
+        private ListView tableListview;
         private SettingsAdapter settingsAdapter;
+        private TableAdapter tableAdapter;
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -42,6 +47,9 @@ namespace HonestFootball.Droid
             ServiceContainer.Register<SettingsViewModel>();
             ServiceContainer.Register<CommentsViewModel>();
             ServiceContainer.Register<TableViewModel>();
+
+            //Get team id
+            DroidSettings.TeamApiId = "9406";
 
             // Create UI
             SetContentView(Resource.Layout.Main);
@@ -65,6 +73,16 @@ namespace HonestFootball.Droid
             settingListview = FindViewById<ListView>(Resource.Id.settingsListView);
             settingsAdapter = new SettingsAdapter(this, teams);
             settingListview.Adapter = settingsAdapter;
+
+            //Get settings list
+            TableViewModel tableVM = new TableViewModel();
+            IList<Team> table = new List<Team>();
+
+            //table = await GetStandings(DroidSettings.TeamApiId);
+
+            //tableListview = FindViewById<ListView>(Resource.Id.tableListView);
+            //tableAdapter = new TableAdapter(this, table);
+            //tableListview.Adapter = tableAdapter;
 
             //Load stat fragments
             var fragments = new SupportFragment[]
@@ -205,72 +223,116 @@ namespace HonestFootball.Droid
             client.OnMessageReceived += (sender, message) => RunOnUiThread(() =>
             {
                 string json = message;
-                string jPath = "Events";
+                string jPath = "Matches";
 
                 JToken token = JToken.Parse(json);
 
                 var y = token.SelectTokens(jPath);
 
-                DroidSettings.TeamApiId = "9378";//TODO - test remove when settings screen set up
-
                 foreach (var childToken in y.Children())
                 {
                     // Comment comment = new Comment();
+                    var latestEvent = childToken.SelectTokens("LatestEvent");
 
-                    var evtScore = childToken.SelectToken("Score").ToString();
-                    var evtMinute = childToken.SelectToken("Minute").ToString();
-                    var homeTeamId = childToken.SelectToken("HomeTeamAPIId").ToString();
-                    var awayTeamId = childToken.SelectToken("AwayTeamAPIId").ToString();
-                    var evtComment = childToken.SelectToken("EventComment").ToString();
-
-                    if (DroidSettings.TeamApiId == homeTeamId || DroidSettings.TeamApiId == awayTeamId)
+                    if (!JsonExtensions.IsNullOrEmpty(childToken.SelectToken("LatestEvent")))
                     {
-                        string jokeComment = string.Empty;
-
-                        if (DroidSettings.TeamApiId == homeTeamId)
+                        foreach (var evt in latestEvent)
                         {
-                            jokeComment = childToken.SelectToken("HomeComment").ToString();
+                            var evtScore = evt.SelectToken("Score").ToString();
+                            var evtMinute = evt.SelectToken("Minute").ToString();
+                            var homeTeamId = evt.SelectToken("HomeTeamAPIId").ToString();
+                            var awayTeamId = evt.SelectToken("AwayTeamAPIId").ToString();
+                            var evtComment = evt.SelectToken("EventComment").ToString();
+
+                            if (DroidSettings.TeamApiId == homeTeamId || DroidSettings.TeamApiId == awayTeamId)
+                            {
+                                string jokeComment = string.Empty;
+
+                                if (DroidSettings.TeamApiId == homeTeamId)
+                                {
+                                    jokeComment = evt.SelectToken("HomeComment").ToString();
+                                }
+                                else if (DroidSettings.TeamApiId == awayTeamId)
+                                {
+                                    jokeComment = evt.SelectToken("AwayComment").ToString();
+                                }
+
+                                var commentText = FindViewById<TextView>(Resource.Id.commentText);
+                                var jokeCommentText = FindViewById<TextView>(Resource.Id.jokeCommentText);
+                                var matchScore = FindViewById<TextView>(Resource.Id.matchScore);
+                                var matchTime = FindViewById<TextView>(Resource.Id.matchTime);
+
+                                commentText.Text = evtComment;
+                                jokeCommentText.Text = jokeComment;
+                                matchScore.Text = evtScore;
+                                matchTime.Text = evtMinute;
+
+                                //Return lineups/substitutions
+                                var homeLineup = childToken.SelectTokens("HomeLineUp");
+                                var awayLineup = childToken.SelectTokens("AwayLineUp");
+
+                                LineupFragment lineUpFragment = new LineupFragment();
+                                var layout = FindViewById<LinearLayout>(Resource.Id.lineupLayout);
+
+                                var trans = SupportFragmentManager.BeginTransaction();
+                                trans.Replace(Resource.Id.lineupLayout, lineUpFragment);
+                                trans.Commit();
+
+                                IList<Player> homeTeam = new List<Player>();
+                                IList<Player> awayTeam = new List<Player>();
+
+                                foreach (var homePlayer in homeLineup.Children())
+                                {
+                                    Player player = new Player();
+
+                                    var jef = homePlayer.SelectToken("PlayerSurname").ToString();
+                                    player.Surname = homePlayer.SelectToken("PlayerSurname").ToString();
+                                    player.IsHomePlayer = Convert.ToBoolean(homePlayer.SelectToken("IsHomePlayer"));
+                                    player.IsSub = Convert.ToBoolean(homePlayer.SelectToken("IsSub"));
+                                    player.Substituted = Convert.ToBoolean(homePlayer.SelectToken("Substituted"));
+                                    player.SubTime = homePlayer.SelectToken("SubTime").ToString();
+                                    player.Position = homePlayer.SelectToken("Position").ToString();
+                                    player.Number = homePlayer.SelectToken("Number").ToString();
+
+                                    homeTeam.Add(player);
+                                }
+
+                                foreach (var awayPlayer in awayLineup.Children())
+                                {
+                                    Player player = new Player();
+
+                                    player.Surname = awayPlayer.SelectToken("PlayerSurname").ToString();
+                                    player.IsHomePlayer = Convert.ToBoolean(awayPlayer.SelectToken("IsHomePlayer"));
+                                    player.IsSub = Convert.ToBoolean(awayPlayer.SelectToken("IsSub"));
+                                    player.Substituted = Convert.ToBoolean(awayPlayer.SelectToken("Substituted"));
+                                    player.SubTime = awayPlayer.SelectToken("SubTime").ToString();
+                                    player.Position = awayPlayer.SelectToken("Position").ToString();
+                                    player.Number = awayPlayer.SelectToken("Number").ToString();
+
+                                    awayTeam.Add(player);
+                                }
+
+                                lineUpFragment.SendData(layout, homeTeam, awayTeam);
+
+                                //Return stats
+                            }
                         }
-                        else if (DroidSettings.TeamApiId == awayTeamId)
-                        {
-                            jokeComment = childToken.SelectToken("AwayComment").ToString();
-                        }
-
-                        var commentText = FindViewById<TextView>(Resource.Id.commentText);
-                        var jokeCommentText = FindViewById<TextView>(Resource.Id.jokeCommentText);
-                        var matchScore = FindViewById<TextView>(Resource.Id.matchScore);
-                        var matchTime = FindViewById<TextView>(Resource.Id.matchTime);
-
-                        commentText.Text = evtComment;
-                        jokeCommentText.Text = jokeComment;
-                        matchScore.Text = evtScore;
-                        matchTime.Text = evtMinute;
-
-                        //Return lineups/substitutions
-                        LineupFragment lineUpFragment = new LineupFragment();
-                        var layout = FindViewById<LinearLayout>(Resource.Id.lineupLayout);
-
-                        var trans = SupportFragmentManager.BeginTransaction();
-                        trans.Replace(Resource.Id.lineupLayout, lineUpFragment);
-                        trans.Commit();
-                 
-                        lineUpFragment.SendData(layout, "Jeff");
-
-                        //Return stats
                     }
-                    //else
-                    //{
-                    //    DisplayText(evtComment.ToString());
-                    //}
+                    else
+                    {
+                        DisplayText("No games today");
+                    }
                 }
             });
         }
 
-        private async void GetStandings()
+        private async Task<IList<Team>> GetStandings(string teamId)
         {
             TableViewModel tableVM = new TableViewModel();
 
-            IList<Team> teams = await tableVM.GetStandings();
+            IList<Team> teams = await tableVM.GetStandings(teamId);
+
+            return teams;
         }
 
         #endregion
@@ -340,7 +402,7 @@ namespace HonestFootball.Droid
 
     public interface IDataFromActivityToLineupFragment
     {
-        void SendData(LinearLayout res, String data);
+        void SendData(LinearLayout res, IList<Player> homeTeam, IList<Player> awayTeam);
     }
 }
 

@@ -100,6 +100,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\DroidSettings.cs" />
+    <Compile Include="Core\General.cs" />
     <Compile Include="Core\SettingsAdapter.cs" />
     <Compile Include="Core\TableAdapter.cs" />
     <Compile Include="Core\TableViewHolder.cs" />

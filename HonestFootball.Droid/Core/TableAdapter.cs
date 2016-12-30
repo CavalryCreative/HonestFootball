@@ -10,11 +10,11 @@ namespace HonestFootball.Droid.Core
     public class TableAdapter : BaseAdapter<Team>
     {
         Activity context;
-        List<Team> teams;
+        IList<Team> teams;
 
-        public TableAdapter(TableFragment context, List<Team> teams)
+        public TableAdapter(Activity context, IList<Team> teams)
         {
-            this.context = context.Activity;
+            this.context = context;
             this.teams = teams;
         }
 

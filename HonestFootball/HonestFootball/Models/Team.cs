@@ -19,6 +19,7 @@ namespace HonestFootball.Models
         public byte GoalsFor { get; set; }
         public byte GoalsAgainst { get; set; }
         public byte Points { get; set; }
+        public bool SelectedTeam { get; set; }
         public string PrimaryColour { get; set; }
         public string SecondaryColour { get; set; }
     }

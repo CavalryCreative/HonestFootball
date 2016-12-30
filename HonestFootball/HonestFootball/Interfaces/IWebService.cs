@@ -11,5 +11,6 @@ namespace HonestFootball.Interfaces
     {
         Task<Comment[]> GetComments(string commentId);
         Task<IList<Team>> GetStandings();
+        Task<IList<Fixture>> GetFixtures();
     }
 }

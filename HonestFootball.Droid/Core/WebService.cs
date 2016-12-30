@@ -21,6 +21,11 @@ namespace HonestFootball.Droid.Core
             throw new NotImplementedException();
         }
 
+        public Task<IList<Fixture>> GetFixtures()
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<IList<Team>> GetStandings()
         {
             throw new NotImplementedException();

@@ -12,7 +12,7 @@ namespace HonestFootball.ViewModels
     {
         public IList<Team> Teams { get; set; }
 
-        public async Task<IList<Team>> GetStandings()
+        public async Task<IList<Team>> GetStandings(string teamId)
         {
             IsBusy = true;
 
@@ -20,7 +20,7 @@ namespace HonestFootball.ViewModels
 
             try
             {
-                string uri = "http://api.football-api.com/2.0/standings/1204?Authorization=565ec012251f932ea4000001393b4115a8bf4bf551672b0543e35683";
+                string uri = "http://honest-apps.elasticbeanstalk.com/api/leaguestandings";
 
                 var webRequest = (HttpWebRequest)WebRequest.Create(uri);
                 webRequest.Method = "GET";
@@ -37,12 +37,13 @@ namespace HonestFootball.ViewModels
 
                     foreach (JProperty prop in content.Properties())
                     {
-                        team.Name = prop.SelectToken("team_name").ToString();
-                        team.GamesPlayed = Convert.ToByte(prop.SelectToken("home_gp"));
-                        team.GamesWon = Convert.ToByte(prop.SelectToken("home_w"));
-                        team.GamesDrawn = Convert.ToByte(prop.SelectToken("home_d"));
-                        team.GamesLost = Convert.ToByte(prop.SelectToken("home_l"));
-                        team.Points = Convert.ToByte(prop.SelectToken("points"));
+                        team.Name = prop.SelectToken("Name").ToString();
+                        team.GamesPlayed = Convert.ToByte(prop.SelectToken("GamesPlayed"));
+                        team.GamesWon = Convert.ToByte(prop.SelectToken("GamesWon"));
+                        team.GamesDrawn = Convert.ToByte(prop.SelectToken("GamesDrawn"));
+                        team.GamesLost = Convert.ToByte(prop.SelectToken("GamesLost"));
+                        team.Points = Convert.ToByte(prop.SelectToken("Points"));
+                        team.SelectedTeam = team.APIId == teamId ? true : false;
                     }
 
                     teams.Add(team);

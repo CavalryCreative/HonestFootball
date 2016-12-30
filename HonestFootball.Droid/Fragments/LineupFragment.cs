@@ -11,6 +11,8 @@ using Android.Util;
 using Android.Views;
 using Android.Widget;
 using HonestFootball.Droid;
+using Android;
+using HonestFootball.Models;
 
 namespace HonestFootball.Droid.Fragments
 {
@@ -31,13 +33,10 @@ namespace HonestFootball.Droid.Fragments
             return rootView;
         }
 
-        public void SendData(LinearLayout res, string data)
+        public void SendData(LinearLayout res, IList<Player> homeTeam, IList<Player> awayTeam)
         {
-            if (data != null)
-            {
-                txtView = res.FindViewById<TextView>(Resource.Id.textView1);
-                txtView.Text = data;
-            }
+            txtView = res.FindViewById<TextView>(Resource.Id.textView1);
+            txtView.Text = "";
         }
     }
 }
