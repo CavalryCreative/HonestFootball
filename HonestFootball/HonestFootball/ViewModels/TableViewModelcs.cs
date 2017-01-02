@@ -29,25 +29,46 @@ namespace HonestFootball.ViewModels
                 var reader = new StreamReader(webResponse.GetResponseStream());
                 string s = reader.ReadToEnd();
 
-                JArray array = JArray.Parse(s);
+                string jPath = "Standings";
 
-                foreach (JObject content in array.Children<JObject>())
+                JToken token = JToken.Parse(s);
+
+                var y = token.SelectTokens(jPath);
+
+                foreach (var childToken in y.Children())
                 {
                     Team team = new Team();
-
-                    foreach (JProperty prop in content.Properties())
-                    {
-                        team.Name = prop.SelectToken("Name").ToString();
-                        team.GamesPlayed = Convert.ToByte(prop.SelectToken("GamesPlayed"));
-                        team.GamesWon = Convert.ToByte(prop.SelectToken("GamesWon"));
-                        team.GamesDrawn = Convert.ToByte(prop.SelectToken("GamesDrawn"));
-                        team.GamesLost = Convert.ToByte(prop.SelectToken("GamesLost"));
-                        team.Points = Convert.ToByte(prop.SelectToken("Points"));
-                        team.SelectedTeam = team.APIId == teamId ? true : false;
-                    }
+           
+                    team.Name = childToken.SelectToken("Name").ToString();
+                    team.GamesPlayed = Convert.ToByte(childToken.SelectToken("GamesPlayed").ToString());
+                    team.GamesWon = Convert.ToByte(childToken.SelectToken("GamesWon").ToString());
+                    team.GamesDrawn = Convert.ToByte(childToken.SelectToken("GamesDrawn").ToString());
+                    team.GamesLost = Convert.ToByte(childToken.SelectToken("GamesLost").ToString());
+                    team.Points = Convert.ToByte(childToken.SelectToken("Points").ToString());
+                    team.SelectedTeam = team.APIId == teamId ? true : false;
 
                     teams.Add(team);
                 }
+
+                //    JArray array = JArray.Parse(s);
+
+                //foreach (JObject content in array.Children<JObject>())
+                //{
+                //    Team team = new Team();
+
+                //    foreach (JProperty prop in content.Properties())
+                //    {
+                //        team.Name = prop.SelectToken("Name").ToString();
+                //        team.GamesPlayed = Convert.ToByte(prop.SelectToken("GamesPlayed"));
+                //        team.GamesWon = Convert.ToByte(prop.SelectToken("GamesWon"));
+                //        team.GamesDrawn = Convert.ToByte(prop.SelectToken("GamesDrawn"));
+                //        team.GamesLost = Convert.ToByte(prop.SelectToken("GamesLost"));
+                //        team.Points = Convert.ToByte(prop.SelectToken("Points"));
+                //        team.SelectedTeam = team.APIId == teamId ? true : false;
+                //    }
+
+                //    teams.Add(team);
+                //}
             }
             finally
             {

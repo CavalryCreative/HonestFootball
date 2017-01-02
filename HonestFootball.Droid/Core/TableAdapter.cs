@@ -12,9 +12,9 @@ namespace HonestFootball.Droid.Core
         Activity context;
         IList<Team> teams;
 
-        public TableAdapter(Activity context, IList<Team> teams)
+        public TableAdapter(TableFragment context, IList<Team> teams)
         {
-            this.context = context;
+            this.context = context.Activity;
             this.teams = teams;
         }
 

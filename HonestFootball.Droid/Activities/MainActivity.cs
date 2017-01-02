@@ -31,9 +31,7 @@ namespace HonestFootball.Droid
     {
         DrawerLayout drawerLayout;
         private ListView settingListview;
-        private ListView tableListview;
         private SettingsAdapter settingsAdapter;
-        private TableAdapter tableAdapter;
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -73,16 +71,6 @@ namespace HonestFootball.Droid
             settingListview = FindViewById<ListView>(Resource.Id.settingsListView);
             settingsAdapter = new SettingsAdapter(this, teams);
             settingListview.Adapter = settingsAdapter;
-
-            //Get settings list
-            TableViewModel tableVM = new TableViewModel();
-            IList<Team> table = new List<Team>();
-
-            //table = await GetStandings(DroidSettings.TeamApiId);
-
-            //tableListview = FindViewById<ListView>(Resource.Id.tableListView);
-            //tableAdapter = new TableAdapter(this, table);
-            //tableListview.Adapter = tableAdapter;
 
             //Load stat fragments
             var fragments = new SupportFragment[]
@@ -324,15 +312,6 @@ namespace HonestFootball.Droid
                     }
                 }
             });
-        }
-
-        private async Task<IList<Team>> GetStandings(string teamId)
-        {
-            TableViewModel tableVM = new TableViewModel();
-
-            IList<Team> teams = await tableVM.GetStandings(teamId);
-
-            return teams;
         }
 
         #endregion
