@@ -22,51 +22,51 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/scrollView1">
-          <LinearLayout
-               android:id="@+id/fragmentContainer"
-               android:layout_width="match_parent"
-               android:layout_height="match_parent">
-        <!-- The Main Content View -->
             <LinearLayout
                 android:id="@+id/fragmentContainer"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-                <android.support.v4.view.ViewPager
-                    android:id="@+id/statsViewPager"
+            <!-- The Main Content View -->
+                <LinearLayout
+                    android:id="@+id/fragmentContainer"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
-                    <android.support.v4.view.PagerTabStrip
+                    <android.support.v4.view.ViewPager
+                        android:id="@+id/statsViewPager"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <android.support.v4.view.PagerTabStrip
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="top" />
+                    </android.support.v4.view.ViewPager>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/commentsContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:textAppearance="?android:attr/textAppearanceMedium"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="top" />
-                </android.support.v4.view.ViewPager>
+                        android:id="@+id/commentText" />
+                    <TextView
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/jokeCommentText" />
+                    <TextView
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/matchScore" />
+                    <TextView
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/matchTime" />
+                </LinearLayout>
             </LinearLayout>
-          <LinearLayout
-               android:id="@+id/commentsContainer"
-               android:layout_width="match_parent"
-               android:layout_height="match_parent">
-                <TextView
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/commentText" />
-                <TextView
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/jokeCommentText" />
-                <TextView
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/matchScore" />
-                <TextView
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/matchTime" />
-            </LinearLayout>
-          </LinearLayout>
         </ScrollView>
     <!-- The Left Navigation Drawer -->
         <ListView

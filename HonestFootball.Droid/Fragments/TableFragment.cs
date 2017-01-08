@@ -13,30 +13,43 @@ using Android.Widget;
 using HonestFootball.ViewModels;
 using HonestFootball.Models;
 using HonestFootball.Droid.Core;
+using System.Threading.Tasks;
 
 namespace HonestFootball.Droid.Fragments
 {
     public class TableFragment : Fragment
     {
-        public override async void OnCreate(Bundle savedInstanceState)
+        public override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-
-            TableViewModel tableVM = new TableViewModel();
-
-            IList<Team> teams = await tableVM.GetStandings(DroidSettings.TeamApiId);
-
-            ListView listview = Activity.FindViewById<ListView>(Resource.Id.tableListView);
-            TableAdapter adapter = new TableAdapter(this, teams.ToList());
-            listview.Adapter = adapter;
         }
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
+            base.OnCreateView(inflater, container, savedInstanceState);
+
             // Use this to return your custom view for this Fragment
             // return inflater.Inflate(Resource.Layout.YourFragment, container, false);
+            var view = inflater.Inflate(Resource.Layout.Table, container, false);
 
-            return base.OnCreateView(inflater, container, savedInstanceState);
+            var teams = GetStandings().Result;
+
+            ListView listview = view.FindViewById<ListView>(Resource.Id.tableListView);
+            TableAdapter adapter = new TableAdapter(this, teams);
+            listview.Adapter = adapter;
+
+            return view;
+
+            //return base.OnCreateView(inflater, container, savedInstanceState);
+        }
+
+        private async Task<IList<Team>> GetStandings()
+        {
+            TableViewModel tableVM = new TableViewModel();
+
+            IList<Team> teams = await tableVM.GetStandings(DroidSettings.TeamApiId);
+
+            return teams;
         }
     }
 }

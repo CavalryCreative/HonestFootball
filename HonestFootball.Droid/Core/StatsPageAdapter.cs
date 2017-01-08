@@ -1,11 +1,11 @@
 using SupportV4Fragment = Android.Support.V4.App.Fragment;
 using SupportV4FragmentManager = Android.Support.V4.App.FragmentManager;
-using FragmentPageAdapter = Android.Support.V4.App.FragmentPagerAdapter;
+using FragmentPagerAdapter = Android.Support.V4.App.FragmentPagerAdapter;
 using Java.Lang;
 
 namespace HonestFootball.Droid.Core
 {
-    public class StatsPageAdapter : FragmentPageAdapter
+    public class StatsPageAdapter : FragmentPagerAdapter
     {
         SupportV4Fragment[] fragments;
         ICharSequence[] titles;
