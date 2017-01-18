@@ -45,6 +45,7 @@ namespace HonestFootball.Droid
             ServiceContainer.Register<SettingsViewModel>();
             ServiceContainer.Register<CommentsViewModel>();
             ServiceContainer.Register<TableViewModel>();
+            ServiceContainer.Register<FixturesViewModel>();
 
             //Get team id
             DroidSettings.TeamApiId = "9406";

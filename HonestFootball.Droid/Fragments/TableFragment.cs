@@ -32,7 +32,7 @@ namespace HonestFootball.Droid.Fragments
             // return inflater.Inflate(Resource.Layout.YourFragment, container, false);
             var view = inflater.Inflate(Resource.Layout.Table, container, false);
 
-            var teams = GetStandings().Result;
+            var teams = Task.Run(async () => await GetStandings()).Result;
 
             ListView listview = view.FindViewById<ListView>(Resource.Id.tableListView);
             TableAdapter adapter = new TableAdapter(this, teams);

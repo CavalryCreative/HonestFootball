@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using HonestFootball.Models;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Net;
 using System.IO;
@@ -20,34 +21,36 @@ namespace HonestFootball.ViewModels
 
             try
             {
-                string uri = "http://honest-apps.elasticbeanstalk.com/api/fixtures/" + teamId.ToString();
+                string uri = "http://honest-football.eu-west-1.elasticbeanstalk.com/api/fixtures/" + teamId.ToString();
 
-                var webRequest = (HttpWebRequest)WebRequest.Create(uri);
-                webRequest.Method = "GET";
-                var webResponse = await webRequest.GetResponseAsync();
+                using (HttpClient client = new HttpClient())
+                using (HttpResponseMessage response = await client.GetAsync(uri))
 
-                var reader = new StreamReader(webResponse.GetResponseStream());
-                string s = reader.ReadToEnd();
-
-                JArray array = JArray.Parse(s);
-
-                foreach (JObject content in array.Children<JObject>())
+                using (HttpContent content = response.Content)
                 {
-                    Fixture fixture = new Fixture();
+                    // ... Read the string.
+                    string result = await content.ReadAsStringAsync();
+                    string jPath = "Fixtures";
 
-                    foreach (JProperty prop in content.Properties())
+                    JToken token = JToken.Parse(result);
+
+                    var y = token.SelectTokens(jPath);
+
+                    foreach (var childToken in y.Children())
                     {
-                        fixture.APIId = prop.SelectToken("APIId").ToString();
-                        fixture.AwayTeamAPIId = Convert.ToInt32(prop.SelectToken("AwayTeamAPIId"));
-                        fixture.AwayTeam = prop.SelectToken("AwayTeam").ToString();
-                        fixture.HomeTeamAPIId = Convert.ToInt32(prop.SelectToken("HomeTeamAPIId"));
-                        fixture.HomeTeam = prop.SelectToken("HomeTeam").ToString();
-                        //fixture.FullTimeScore = prop.SelectToken("FullTimeScore").ToString();
-                        fixture.KickOff = prop.SelectToken("KickOff").ToString();
-                        fixture.MatchDate = prop.SelectToken("MatchDate").ToString();
-                    }
+                        Fixture fixture = new Fixture();
 
-                    fixtures.Add(fixture);
+                        fixture.APIId = childToken.SelectToken("APIId").ToString();
+                        fixture.AwayTeamAPIId = Convert.ToInt32(childToken.SelectToken("AwayTeamAPIId"));
+                        fixture.AwayTeam = childToken.SelectToken("AwayTeam").ToString();
+                        fixture.HomeTeamAPIId = Convert.ToInt32(childToken.SelectToken("HomeTeamAPIId"));
+                        fixture.HomeTeam = childToken.SelectToken("HomeTeam").ToString();
+                        //fixture.FullTimeScore = childToken.SelectToken("FullTimeScore").ToString();
+                        fixture.KickOff = childToken.SelectToken("KickOff").ToString();
+                        fixture.MatchDate = childToken.SelectToken("MatchDate").ToString();
+
+                        fixtures.Add(fixture);
+                    }
                 }
             }
             finally

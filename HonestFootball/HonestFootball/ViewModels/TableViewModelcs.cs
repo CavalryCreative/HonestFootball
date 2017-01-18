@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using HonestFootball.Models;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Net;
 using System.IO;
@@ -20,34 +21,42 @@ namespace HonestFootball.ViewModels
 
             try
             {
-                string uri = "http://honest-apps.elasticbeanstalk.com/api/leaguestandings";
+                string uri = "http://honest-football.eu-west-1.elasticbeanstalk.com/api/leaguestandings";
 
-                var webRequest = (HttpWebRequest)WebRequest.Create(uri);
-                webRequest.Method = "GET";
-                var webResponse = await webRequest.GetResponseAsync();
+                //var webRequest = (HttpWebRequest)WebRequest.Create(uri);
+                //webRequest.Method = "GET";
+                //var webResponse = await webRequest.GetResponseAsync();
 
-                var reader = new StreamReader(webResponse.GetResponseStream());
-                string s = reader.ReadToEnd();
+                //var reader = new StreamReader(webResponse.GetResponseStream());
+                //string s = reader.ReadToEnd();
 
-                string jPath = "Standings";
+                using (HttpClient client = new HttpClient())
+                using (HttpResponseMessage response = await client.GetAsync(uri))
 
-                JToken token = JToken.Parse(s);
-
-                var y = token.SelectTokens(jPath);
-
-                foreach (var childToken in y.Children())
+                using (HttpContent content = response.Content)
                 {
-                    Team team = new Team();
-           
-                    team.Name = childToken.SelectToken("Name").ToString();
-                    team.GamesPlayed = Convert.ToByte(childToken.SelectToken("GamesPlayed").ToString());
-                    team.GamesWon = Convert.ToByte(childToken.SelectToken("GamesWon").ToString());
-                    team.GamesDrawn = Convert.ToByte(childToken.SelectToken("GamesDrawn").ToString());
-                    team.GamesLost = Convert.ToByte(childToken.SelectToken("GamesLost").ToString());
-                    team.Points = Convert.ToByte(childToken.SelectToken("Points").ToString());
-                    team.SelectedTeam = team.APIId == teamId ? true : false;
+                    // ... Read the string.
+                    string result = await content.ReadAsStringAsync();
+                    string jPath = "Standings";
 
-                    teams.Add(team);
+                    JToken token = JToken.Parse(result);
+
+                    var y = token.SelectTokens(jPath);
+
+                    foreach (var childToken in y.Children())
+                    {
+                        Team team = new Team();
+
+                        team.Name = childToken.SelectToken("Name").ToString();
+                        team.GamesPlayed = Convert.ToByte(childToken.SelectToken("GamesPlayed").ToString());
+                        team.GamesWon = Convert.ToByte(childToken.SelectToken("GamesWon").ToString());
+                        team.GamesDrawn = Convert.ToByte(childToken.SelectToken("GamesDrawn").ToString());
+                        team.GamesLost = Convert.ToByte(childToken.SelectToken("GamesLost").ToString());
+                        team.Points = Convert.ToByte(childToken.SelectToken("Points").ToString());
+                        team.SelectedTeam = team.APIId == teamId ? true : false;
+
+                        teams.Add(team);
+                    }
                 }
 
                 //    JArray array = JArray.Parse(s);
