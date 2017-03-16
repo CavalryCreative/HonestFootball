@@ -21,7 +21,7 @@ namespace HonestFootball.ViewModels
 
             try
             {
-                string uri = "http://honest-football.eu-west-1.elasticbeanstalk.com/api/leaguestandings";
+                string uri = "http://honestfootball.eu-west-1.elasticbeanstalk.com/api/leaguestandings";
 
                 //var webRequest = (HttpWebRequest)WebRequest.Create(uri);
                 //webRequest.Method = "GET";

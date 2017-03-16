@@ -21,7 +21,7 @@ namespace HonestFootball.ViewModels
 
             try
             {
-                string uri = "http://honest-football.eu-west-1.elasticbeanstalk.com/api/fixtures/" + teamId.ToString();
+                string uri = "http://honestfootball.eu-west-1.elasticbeanstalk.com/api/fixtures/" + teamId.ToString();
 
                 using (HttpClient client = new HttpClient())
                 using (HttpResponseMessage response = await client.GetAsync(uri))

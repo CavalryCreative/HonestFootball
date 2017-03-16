@@ -352,7 +352,7 @@ namespace HonestFootball.Droid
         public Client(string platform)
         {
             _platform = platform;
-            _connection = new HubConnection("http://honest-apps.elasticbeanstalk.com/");
+            _connection = new HubConnection("http://honestapps.elasticbeanstalk.com/");
             _proxy = _connection.CreateHubProxy("FeedHub");
         }
 

@@ -9,8 +9,8 @@
     <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>HonestFootball.Android</RootNamespace>
-    <AssemblyName>HonestFootball.Android</AssemblyName>
+    <RootNamespace>HonestFootball.Droid</RootNamespace>
+    <AssemblyName>HonestFootball.Droid</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <AndroidApplication>true</AndroidApplication>
     <AndroidResgenFile>Resources\Resource.Designer.cs</AndroidResgenFile>
@@ -172,7 +172,6 @@
       <Version>23.4.0.1</Version>
     </XamarinComponentReference>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <AndroidResource Include="Resources\values\Styles.xml" />
   </ItemGroup>
@@ -258,16 +257,16 @@
     <AndroidResource Include="Resources\drawable-xxxhdpi\Icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\HonestFootball\HonestFootball\HonestFootball.csproj">
-      <Project>{0fcfd63a-fb4e-48c0-a95c-4a5565c17d28}</Project>
-      <Name>HonestFootball</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\anim\slide_in.xml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\anim\slide_out.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\HonestFootball\HonestFootball\HonestFootball.csproj">
+      <Project>{0fcfd63a-fb4e-48c0-a95c-4a5565c17d28}</Project>
+      <Name>HonestFootball</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Android.Support.Vector.Drawable.23.4.0.1\build\Xamarin.Android.Support.Vector.Drawable.targets" Condition="Exists('..\packages\Xamarin.Android.Support.Vector.Drawable.23.4.0.1\build\Xamarin.Android.Support.Vector.Drawable.targets')" />
